@@ -43,6 +43,8 @@ import SrirachaAioli from "../../assets/img/menuFlavor4.jpg";
 
 import "./MenuPage.css";
 
+import Testimonial from "./Testimonial";
+
 export default function MenuPage() {
     const bowlSteps = [
         {
@@ -96,6 +98,7 @@ export default function MenuPage() {
     ];
     
     return (
+    <>
         <section className="menu">
             <div className="menu-container">
                 <img src={menuImg1} alt="menu img" />
@@ -189,7 +192,11 @@ export default function MenuPage() {
                 </section>
 
             </div>
+
+            
         </section>
+        <Testimonial/>
+    </>
     );
 }
 

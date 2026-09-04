@@ -1,0 +1,253 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.menu {
+    padding:40px 60px;
+    background: #faf8f5;
+}
+
+.menu-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.menu-container > img {
+    width: 100%;
+    height: 379px;
+    border-radius: 0px;
+    margin-bottom: 25px;
+    object-fit: cover;
+    margin-top: -40px;
+}
+
+.our-menu {
+    padding-top: 50px;
+}
+
+.our-menu h1 {
+    text-align: center;
+    font-size: 38px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 100px;
+}
+
+.menu-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 30px;
+    row-gap: 60px; 
+    margin-bottom: 100px;
+}
+
+.menu-item {
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    padding: 25px 20px;
+    padding-top: 0; 
+    text-align: left;
+    position: relative;
+
+    height: 340px;
+    width: 327px;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-item img {
+    display: block;
+    width: 219px;
+    height: 219px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0 auto 20px auto;
+    margin-top: -85px;
+    border: 4px solid #ffffff; 
+    flex-shrink: 0;
+}
+
+.menu-item h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+    flex-shrink: 0;
+}
+
+.menu-item p {
+    font-size: 13px;
+    color: #8a8a8a;
+    line-height: 1.6;
+    margin-bottom: 18px;
+    min-height: 65px;
+    flex-grow: 1;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.menu-item button {
+    display: inline-block;
+    width: auto;
+    padding: 10px 22px;
+    color: #F96540;
+    background: #FFF1EC;
+    border: none;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    text-transform: none;
+    flex-shrink: 0;
+    align-self: flex-start;
+}
+
+.menu-item button:hover {
+    color: #F96540;
+    background: #FEE1DA;
+}
+
+.see-all {
+    display: block;
+    margin: 40px auto 0;
+    padding: 12px 45px;
+    background: transparent;
+    color: #1a1a1a;
+    border: 1.5px solid #d8d4cd;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    text-transform: none;
+}
+
+.see-all:hover {
+    background: #1a1a1a;
+    color: #ffffff;
+    border-color: #1a1a1a;
+}
+
+.build-bowl {
+    margin-top: 20px;
+    padding: 60px 60px 80px;
+    background: #ffffff;
+}
+
+.build-bowl-container {
+    max-width: 900px;
+    margin: 0;
+}
+
+.build-bowl-container > h1 {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 50px;
+}
+
+.bowl-step {
+    margin-bottom: 45px;
+}
+
+.step-heading {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.step-number {
+    font-size: 34px;
+    font-weight: 700;
+    color: #F9A08066;
+    line-height: 1;
+}
+
+.step-label {
+    font-size: 12px;
+    color: #9a9a9a;
+    margin-bottom: 2px;
+}
+
+.step-heading h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.bowl-items-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    row-gap: 35px;
+    column-gap: 150px;
+}
+
+.bowl-item {
+    text-align: center;
+}
+
+.bowl-item img {
+    display: block;
+    width: 206px;
+    height: 206px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0 auto 10px auto;
+    border: 3px solid #f2f2f2;
+}
+
+.bowl-item p {
+    font-size: 13px;
+    color: #333;
+}
+
+.order-now-btn {
+    display: block;
+    margin: 40px auto 0;
+    padding: 12px 45px;
+    background: #F96540;
+    color: #ffffff;
+    border: none;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.order-now-btn:hover {
+    background: #e2532f;
+}
+
+
+@media (max-width: 768px) {
+    .build-bowl {
+        padding: 40px 20px;
+    }
+    .bowl-items-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 1024px) {
+    .menu-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .menu {
+        padding: 30px 20px;
+    }
+    .menu-row {
+        grid-template-columns: 1fr;
+    }
+    .our-menu h1 {
+        font-size: 26px;
+    }
+}

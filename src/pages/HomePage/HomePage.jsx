@@ -14,24 +14,25 @@ import avatar4 from "../../assets/img/I1.jpg";
 
 import bowlHandImg from "../../assets/img/bowl-hand.jpg";
 
-import locationBowl1 from "../../assets/img/location-bowl1.jpg";
-import locationBowl2 from "../../assets/img/location-bowl2.jpg";
+// import locationBowl1 from "../../assets/img/location-bowl1.jpg";
+// import locationBowl2 from "../../assets/img/location-bowl2.jpg";
 
 import { FaChevronRight } from "react-icons/fa";
 
-import galleryImg1 from "../../assets/img/gallery1.jpg";
-import galleryImg2 from "../../assets/img/gallery4.jpg";
-import galleryImg3 from "../../assets/img/gallery7.jpg";
-import galleryImg4 from "../../assets/img/gallery2.jpg";
-import galleryImg5 from "../../assets/img/gallery5.jpg";
-import galleryImg6 from "../../assets/img/gallery8.jpg";
-import galleryImg7 from "../../assets/img/gallery3.jpg";
-import galleryImg8 from "../../assets/img/gallery6.jpg";
-import galleryImg9 from "../../assets/img/gallery9.jpg";
-import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
+// import galleryImg1 from "../../assets/img/gallery1.jpg";
+// import galleryImg2 from "../../assets/img/gallery4.jpg";
+// import galleryImg3 from "../../assets/img/gallery7.jpg";
+// import galleryImg4 from "../../assets/img/gallery2.jpg";
+// import galleryImg5 from "../../assets/img/gallery5.jpg";
+// import galleryImg6 from "../../assets/img/gallery8.jpg";
+// import galleryImg7 from "../../assets/img/gallery3.jpg";
+// import galleryImg8 from "../../assets/img/gallery6.jpg";
+// import galleryImg9 from "../../assets/img/gallery9.jpg";
+// import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
 
 import "./HomePage.css"
 import { useState } from "react";
+import LocationAndGallery from "./LocationAndGallery";
 
 const testimonials = [
     {
@@ -55,7 +56,7 @@ export default function HomePage(){
         <>
          <section className="hero">
             <div className="hero-container">
-                <img src={heroImg} alt="Asian inspired poke bowl" />
+                <img src={heroImg} alt="Asian inspired poke bowl"loading="eager" />
 
                 <div className="hero-content">
                     <h1>ASIAN INSPIRED BOWLS</h1>
@@ -82,7 +83,9 @@ export default function HomePage(){
 
         <section className="hero-menu">
           <div className="our-menu">
-                    <h1>Signature Bowls</h1>
+                   <div className="our-menu-heading">
+                   <h1>Signature Bowls</h1>
+                   </div>
                     
                     <div className="menu-row">
                         <div className="hero-item">
@@ -111,9 +114,13 @@ export default function HomePage(){
                         </div>
                     </div>
 
+                    
+                    <button className="explore-more">Explore more</button>
                  
 
-                    <button className="see-all">Explore more</button>
+                 
+
+                    
                 </div>
         </section>
         
@@ -146,7 +153,7 @@ export default function HomePage(){
         </div>
        </section>
 
-       <section className="find-locations">
+       {/* <section className="find-locations">
                 <div className="find-locations-container">
                     <div className="locations-text">
                         <h2>Find our locations</h2>
@@ -162,10 +169,10 @@ export default function HomePage(){
                         <img src={locationBowl2} alt="poke bowl" className="bowl-small" />
                     </div>
                 </div>
-            </section>
+            </section> */}
 
 
-            <section className="follow-us">
+    {/* <section className="follow-us">
     <div className="follow-us-container">
         <div className="follow-us-text">
             <h2>Follow us</h2>
@@ -211,7 +218,9 @@ export default function HomePage(){
             </div>
         </div>
     </div>
-           </section>
+           </section> */}
+
+           <LocationAndGallery/>
 
         </>
        

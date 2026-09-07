@@ -187,7 +187,9 @@ export default function MenuPage() {
                             </div>
                         ))}
 
-                        <button className="order-now-btn">Order Now</button>
+                      <div className="order-btn">
+                      <button className="order-now-btn">Order Now</button>
+                      </div>
                     </div>
                 </section>
 

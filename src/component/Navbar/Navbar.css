@@ -1,110 +1,28 @@
-
-.navbar{
+.navbar {
     background-color: #fff;
     padding: 1rem 4rem;
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 100000;
     border-bottom: 2px solid #e5e3e3;
 }
-.nav-container{
-    /* height: 80px; */
+
+.nav-container {
     max-width: 1440px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-
-}
-.nav-left{
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-.nav-left img{
-    height: 48px;
-    width: 48px;
-    cursor: pointer;
-}
-.nav-left h1{
-    font-family: Catamaran;
-    font-size: 1.125rem;
-    font-weight: 800;
-    letter-spacing: 1px;
-    margin: 0;
-    color: #171A1FFF;
-    cursor: pointer;
-}
-.nav-left h1::after{
-    content : '.';
-    color: #000;
-}
-.nav-center ul{
-    display: flex;
-    list-style: none;
-    gap: 2.5rem;
-    margin: 0;
-    padding: 0;
-    cursor: pointer;
-
-}
-.nav-left ul li{
-    color: #fff;
-    font-size: 1rem;
-    font-weight: 400;
-    cursor:pointer;
-    transition: color 0.3s ease;
     position: relative;
 }
-.nav-center ul li:hover{
-    color: #171A1FFF;
-}
 
-.nav-center ul li:hover::after {
-    width: 100%;
-}
-.nav-right{
+/* ---------- LEFT - LOGO ---------- */
+.nav-left {
     display: flex;
-    gap: 1rem;
-
-}
-.nav-right button{
-    padding: 0.6rem 1rem;
-    font-size: 1rem;
-    font-weight: 400;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    letter-spacing: 0.5px;
-}
-.nav-right button:first-child{
-    background-color: #fff;
-    color: #000;
-}
-.nav-right button:first-child:hover {
-    color: #171A1FFF;
-    background: #EAECEFFF;
-    transform: scale(1.05);
-    
-}
-.nav-right button:last-child {
-    background: #171A1FFF;
-    color: #fff;
-    border: none; 
-   
+    align-items: center;
 }
 
-.nav-right button:last-child:hover {
-    background: #262A33FF; 
-    color: #ffffff;
-    transform: scale(1.05);
-  
-}
-/* Add to existing Navbar.css */
-
-/* Logo link */
 .nav-logo-link {
     display: flex;
     align-items: center;
@@ -112,15 +30,170 @@
     text-decoration: none;
 }
 
-/* Navigation links */
+.nav-left img {
+    height: 48px;
+    width: 48px;
+    cursor: pointer;
+}
+
+.nav-left h1 {
+    font-family: Catamaran;
+    font-size: 1.125rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin: 0;
+    color: #171A1F;
+    cursor: pointer;
+}
+
+.nav-left h1::after {
+    content: '.';
+    color: #000;
+}
+
+/* ---------- CENTER - DESKTOP MENU ---------- */
+.nav-center {
+    display: flex;
+    align-items: center;
+}
+
+.nav-center ul {
+    display: flex;
+    list-style: none;
+    gap: 2.5rem;
+    margin: 0;
+    padding: 0;
+}
+
 .nav-center ul li a {
     color: #000;
     text-decoration: none;
+    font-size: 1rem;
+    font-weight: 400;
     transition: color 0.3s ease;
+    position: relative;
 }
 
+.nav-center ul li a:hover {
+    color: #F96540;
+}
 
+.nav-center ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #F96540;
+    transition: width 0.3s ease;
+}
 
+.nav-center ul li a:hover::after {
+    width: 100%;
+}
+
+/* ---------- RIGHT - DESKTOP BUTTONS ---------- */
+.nav-right {
+    display: flex;
+    gap: 1rem;
+}
+
+.nav-right button {
+    padding: 0.6rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+}
+
+.nav-right button:first-child {
+    background-color: #fff;
+    color: #000;
+    border: 1.5px solid #e5e3e3;
+}
+
+.nav-right button:first-child:hover {
+    color: #F96540;
+    background: #FFF1EC;
+    border-color: #F96540;
+    transform: scale(1.05);
+}
+
+.nav-right button:last-child {
+    background: #171A1F;
+    color: #fff;
+    border: none;
+}
+
+.nav-right button:last-child:hover {
+    background: #F96540;
+    color: #ffffff;
+    transform: scale(1.05);
+}
+
+/* ---------- HAMBURGER ICON ---------- */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    color: #171A1F;
+    transition: all 0.3s ease;
+}
+
+.hamburger:hover {
+    color: #F96540;
+}
+
+/* ---------- MOBILE MENU BUTTONS ---------- */
+.nav-right-mobile {
+    display: none;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    padding: 1rem 0;
+}
+
+.nav-right-mobile button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.nav-right-mobile button:first-child {
+    background-color: #fff;
+    color: #000;
+    border: 1.5px solid #e5e3e3;
+}
+
+.nav-right-mobile button:first-child:hover {
+    color: #F96540;
+    background: #FFF1EC;
+    border-color: #F96540;
+}
+
+.nav-right-mobile button:last-child {
+    background: #171A1F;
+    color: #fff;
+    border: none;
+}
+
+.nav-right-mobile button:last-child:hover {
+    background: #F96540;
+    color: #ffffff;
+}
+
+/* ============================================ */
+/* ========== RESPONSIVE DESIGN =============== */
+/* ============================================ */
 
 @media (max-width: 1024px) {
     .navbar {
@@ -132,34 +205,89 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .navbar {
         padding: 0.8rem 1.5rem;
     }
     
-    .nav-container {
+    /* Hide desktop menu */
+    .nav-center {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 400px;
+        height: 100vh;
+        background: #ffffff;
         flex-direction: column;
-        gap: 1rem;
+        align-items: flex-start;
+        padding: 80px 2rem 2rem;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+        transition: right 0.4s ease;
+        overflow-y: auto;
+        z-index: 999;
+    }
+    
+    .nav-center.active {
+        right: 0;
     }
     
     .nav-center ul {
-        gap: 1rem;
-        flex-wrap: wrap;
-        justify-content: center;
+        flex-direction: column;
+        gap: 1.5rem;
+        width: 100%;
     }
     
-    .nav-left h1 {
-        font-size: 1.4rem;
+    .nav-center ul li a {
+        font-size: 1.2rem;
+        font-weight: 500;
+        display: block;
+        padding: 0.5rem 0;
     }
     
+    .nav-center ul li a::after {
+        display: none;
+    }
+    
+    .nav-center ul li a:hover {
+        color: #F96540;
+    }
+    
+    /* Show mobile buttons */
+    .nav-right-mobile {
+        display: flex;
+        margin-top: 2rem;
+    }
+    
+    /* Hide desktop buttons */
     .nav-right {
-        flex-wrap: wrap;
-        justify-content: center;
+        display: none;
     }
     
-    .nav-right button {
-        padding: 0.5rem 1.2rem;
-        font-size: 0.8rem;
+    /* Show hamburger */
+    .hamburger {
+        display: block;
+        z-index: 1000;
+    }
+    
+    /* Overlay when menu is open */
+    .navbar::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.4s ease;
+        z-index: 998;
+    }
+    
+    .navbar.menu-open::before {
+        opacity: 1;
+        visibility: visible;
     }
 }
 
@@ -169,19 +297,30 @@
     }
     
     .nav-left img {
-        height: 30px;
+        height: 36px;
+        width: 36px;
     }
     
     .nav-left h1 {
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
     
-    .nav-center ul li {
-        font-size: 0.8rem;
+    .nav-center {
+        padding: 70px 1.5rem 1.5rem;
+        width: 85%;
     }
     
-    .nav-right button {
-        padding: 0.4rem 1rem;
-        font-size: 0.7rem;
+    .nav-center ul li a {
+        font-size: 1rem;
+    }
+    
+    .nav-right-mobile button {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+    }
+    
+    .hamburger svg {
+        width: 22px;
+        height: 22px;
     }
 }

@@ -1,17 +1,6 @@
-// import galleryImg1 from "../../assets/img/gallery1.jpg";
-// import galleryImg2 from "../../assets/img/gallery4.jpg";
-// import galleryImg3 from "../../assets/img/gallery7.jpg";
-// import galleryImg4 from "../../assets/img/gallery2.jpg";
-// import galleryImg5 from "../../assets/img/gallery5.jpg";
-// import galleryImg6 from "../../assets/img/gallery8.jpg";
-// import galleryImg7 from "../../assets/img/gallery3.jpg";
-// import galleryImg8 from "../../assets/img/gallery6.jpg";
-// import galleryImg9 from "../../assets/img/gallery9.jpg";
 
 import locationBowl1 from "../../assets/img/location-bowl1.jpg";
 import locationBowl2 from "../../assets/img/location-bowl2.jpg";
-
-// import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
 
 import "./HomePage.css"
 import GalleryPage from "./GalleryPage";

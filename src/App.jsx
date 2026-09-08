@@ -7,6 +7,9 @@ import HomePage from './pages/HomePage/HomePage'
 import StoryPage from './pages/storyPage/StoryPage'
 import LocationPage from './pages/LocationPage/LocationPage'
 import GiftPage from './pages/GiftPage/GiftPage'
+import Privacy from './pages/Privacypage/privacy'
+import Terms from './pages/TermsPage/Terms'
+import Sitemap from './pages/SitemapPage/Sitemap'
 
 function App() {
   return (
@@ -19,6 +22,10 @@ function App() {
         <Route path="/our-story"element={<StoryPage/>}/>
         <Route path="/location"element={<LocationPage/>}/>
         <Route path="/gift-card"element={<GiftPage/>}/>
+        <Route path="/privacy"element={<Privacy/>}/>
+        <Route path="/terms"element={<Terms/>}/>
+        <Route path="/sitemap"element={<Sitemap/>}/>
+
       </Routes>
 
       <Footer/>

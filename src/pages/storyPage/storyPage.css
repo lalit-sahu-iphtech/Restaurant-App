@@ -1,18 +1,11 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
-body {
-    font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
-}
 
-/* ===================== STORY SECTION ===================== */
+
 .story {
     width: 100%;
     background: #ffffff;
-    padding-bottom: 350px;
+    padding-bottom: 300px;
+    overflow: hidden;
 }
 
 .story-container {
@@ -23,7 +16,7 @@ body {
 .story-container > img {
     width: 100%;
     height: 460px;
-    object-fit: cover;.
+    object-fit: cover;
     object-position: center;
     display: block;
 }
@@ -38,14 +31,13 @@ body {
     padding: 45px 55px;
     width: 580px;
     max-width: 92%;
-    /* text-align: center; */
     border-radius: 12px;
     box-shadow: 0px 10px 40px rgba(23, 26, 31, 0.12);
     z-index: 10;
 }
 
 .story-content h1 {
-    font-size: 34px;
+    font-size: clamp(22px, 4vw, 34px);
     font-weight: 700;
     color: #171A1F;
     line-height: 1.2;
@@ -78,7 +70,7 @@ body {
 }
 
 .story-content .order-btn {
-
+    display: block;
     padding: 14px 45px;
     background: #F96540;
     color: #ffffff;
@@ -96,82 +88,83 @@ body {
     transform: scale(1.02);
 }
 
-/* ===================== RES / HERITAGE SECTION ===================== */
+/* res section */
+
 .res {
+  
     width: 100%;
     background: #FAF9F6;
-    padding: 80px 0 100px;
-    /* overflow: hidden; */
+    padding: 10px;
+    overflow: hidden;
     position: relative;
-    z-index: 10000;
+    height: 500px;
 }
 
 .res-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 60px;
+    width: 100%;
+    height: 100%;
+    /* max-width: 1200px; */
+    margin: 0 60px;    
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    gap: 60px;
+    gap: 40px;
 }
 
 .res-content {
-    flex: 0 0 400px;
-  
+    flex: 1;
+ 
+    min-width: 300px;
 }
 
 .res-content h1 {
-    width: 554px; 
-    height: 136px; 
-    font-family: Catamaran; 
-    font-size: 48px; 
-    line-height: 68px; 
-    font-weight: 700; 
+  
+    font-size: clamp(26px, 3vw, 48px);
+    line-height: 1.35;
+    font-weight: 700;
     color: #171A1FFF;
-    margin-bottom: 18px;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .res-content p {
-    width: 554px; 
-  height: 130px; 
-  font-family: Nunito; 
-  font-size: 16px; 
-  line-height: 26px; 
-  font-weight: 400; 
-  color: #171A1FFF;
+    font-family: Nunito, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    font-weight: 400;
+    color: #171A1FFF;
+
 }
 
-/* Right side - Image Cluster */
+
+ 
 .res-img {
     position: relative;
-    width: 480px;
-    height: 400px;
-    flex-shrink: 0;
-    margin-left: 570px;
+    flex: 1;
+    max-width: 400px;
+    height: auto;
+  
 }
 
+/* Thin outline circle in the background */
 .res-img-arc {
     position: absolute;
-    top: 50%;
-    left: 97%;
-    transform: translate(-50%, -50%);
-    width: 500px;
-    height: 500px;
+    top: 0;
+    right: 10px;
+    width: 100%;
+    height: 100%;
     border: 2px solid #F9A825;
     border-radius: 50%;
-    opacity: 0.5;
+    opacity: 0.6;
     z-index: 1;
 }
 
-/* Main center image */
+/* Main bowl image - sits mostly inside the arc, slightly offset
+   toward the bottom-left rather than perfectly centered */
 .res-img-main {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 463px;
-    height: 463px;
+    right: 150px;
+    top: 56px;
+    width: 100%;
     border-radius: 50%;
     object-fit: cover;
     box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.15);
@@ -179,10 +172,12 @@ body {
     border: 4px solid #FAF9F6;
 }
 
+/* Small bowl images - sit on the right side, straddling the arc's
+   edge (half inside the ring, half outside it) */
 .res-img-small {
     position: absolute;
-    width: 206px;
-    height: 206px;
+    width: 50%;
+    right: -20px;
     border-radius: 50%;
     object-fit: cover;
     box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.12);
@@ -190,16 +185,12 @@ body {
     border: 4px solid #FAF9F6;
 }
 
-/* Top right - positioned on the arc pointing at center */
 .res-img-top {
-    top: -120px;
-    right: -200px;
+    top: -40px;
 }
 
-/* Bottom right - positioned on the arc pointing at center */
 .res-img-bottom {
-    bottom: -120px;
-    right: -200px;
+    top: 330px;
 }
 
 /* ============================================ */
@@ -208,47 +199,34 @@ body {
 
 @media (max-width: 1100px) {
     .res-container {
-        gap: 40px;
         padding: 0 40px;
     }
-    
-    .res-content {
-        flex: 0 0 350px;
-    }
-    
-    .res-content h1 {
-        font-size: 32px;
-    }
-    
-    .res-img {
-        width: 400px;
-        height: 350px;
-     
-    }
-    
+
+    .res-img,
     .res-img-arc {
-        width: 480px;
-        height: 480px;
+        width: 340px;
+        height: 340px;
     }
-    
+
     .res-img-main {
-        width: 240px;
-        height: 240px;
+        left: 65px;
+        top: 48px;
+        width: 248px;
+        height: 248px;
     }
-    
+
     .res-img-small {
-        width: 100px;
-        height: 100px;
+        width: 112px;
+        height: 112px;
+        left: 214px;
     }
-    
+
     .res-img-top {
-        top: 10px;
-        right: -5px;
+        top: -7px;
     }
-    
+
     .res-img-bottom {
-        bottom: 10px;
-        right: -5px;
+        top: 231px;
     }
 }
 
@@ -256,56 +234,48 @@ body {
     .story-container > img {
         height: 380px;
     }
-    
+
     .story-content {
         padding: 35px 40px;
         width: 90%;
         max-width: 520px;
     }
-    
-    .story-content h1 {
-        font-size: 28px;
-    }
-    
+
     .res-container {
         flex-direction: column;
         text-align: center;
         padding: 0 30px;
     }
-    
+
     .res-content {
-        flex: 1;
-        width: 100%;
         max-width: 600px;
     }
-    
-    .res-content h1 {
-        font-size: 30px;
-    }
-    
-    .res-img {
-        width: 380px;
-        height: 350px;
-    }
-    
+
+    .res-img,
     .res-img-arc {
-        width: 450px;
-        height: 450px;
+        width: 320px;
+        height: 320px;
     }
-    
+
     .res-img-main {
-        width: 220px;
-        height: 220px;
+        left: 61px;
+        top: 45px;
+        width: 234px;
+        height: 234px;
     }
-    
+
+    .res-img-small {
+        width: 106px;
+        height: 106px;
+        left: 202px;
+    }
+
     .res-img-top {
-        top: 5px;
-        right: 0;
+        top: -6px;
     }
-    
+
     .res-img-bottom {
-        bottom: 5px;
-        right: 0;
+        top: 218px;
     }
 }
 
@@ -313,12 +283,12 @@ body {
     .story {
         padding-bottom: 60px;
     }
-    
+
     .story-container > img {
         height: 300px;
         min-height: 220px;
     }
-    
+
     .story-content {
         position: relative;
         top: auto;
@@ -330,216 +300,202 @@ body {
         max-width: 100%;
         border-radius: 12px;
     }
-    
-    .story-content h1 {
-        font-size: 26px;
-        margin-bottom: 12px;
-    }
-    
+
     .story-content .main-text {
         font-size: 14px;
         margin-bottom: 18px;
     }
-    
+
     .story-content h3 {
         font-size: 18px;
         margin-bottom: 10px;
     }
-    
+
     .story-content .sub-text {
         font-size: 14px;
         margin-bottom: 20px;
     }
-    
+
     .story-content .order-btn {
         padding: 12px 35px;
         font-size: 14px;
     }
-    
+
     .res {
         padding: 50px 0 60px;
     }
-    
+
     .res-container {
         padding: 0 20px;
         gap: 30px;
     }
-    
-    .res-content h1 {
-        font-size: 26px;
-    }
-    
+
     .res-content p {
         font-size: 14px;
     }
-    
-    .res-img {
-        width: 320px;
-        height: 300px;
-    }
-    
+
+    .res-img,
     .res-img-arc {
-        width: 380px;
-        height: 380px;
+        width: 280px;
+        height: 280px;
     }
-    
+
     .res-img-main {
-        width: 180px;
-        height: 180px;
+        left: 53px;
+        top: 39px;
+        width: 204px;
+        height: 204px;
     }
-    
+
     .res-img-small {
-        width: 85px;
-        height: 85px;
+        width: 92px;
+        height: 92px;
+        left: 176px;
     }
-    
+
     .res-img-top {
-        top: 0;
-        right: -5px;
+        top: -6px;
     }
-    
+
     .res-img-bottom {
-        bottom: 0;
-        right: -5px;
+        top: 190px;
     }
 }
 
 @media (max-width: 576px) {
     .story-container > img {
-        height: 200px;
+        height: 220px;
         min-height: 180px;
     }
-    
+
     .story-content {
         padding: 25px 20px;
         margin: -30px auto 0;
         width: 95%;
     }
-    
-    .story-content h1 {
-        font-size: 22px;
-    }
-    
+
     .story-content .main-text {
         font-size: 13px;
     }
-    
+
     .story-content h3 {
         font-size: 16px;
     }
-    
+
     .story-content .sub-text {
         font-size: 13px;
     }
-    
+
     .story-content .order-btn {
         padding: 10px 28px;
         font-size: 13px;
         width: 100%;
     }
-    
+
     .res {
         padding: 40px 0 50px;
     }
-    
+
     .res-container {
         padding: 0 15px;
         gap: 25px;
     }
-    
-    .res-content h1 {
-        font-size: 22px;
-    }
-    
+
     .res-content p {
         font-size: 13px;
     }
-    
-    .res-img {
-        width: 280px;
-        height: 260px;
-    }
-    
+
+    .res-img,
     .res-img-arc {
-        width: 330px;
-        height: 330px;
+        width: 230px;
+        height: 230px;
     }
-    
+
     .res-img-main {
-        width: 150px;
-        height: 150px;
+        left: 44px;
+        top: 32px;
+        width: 168px;
+        height: 168px;
     }
-    
+
     .res-img-small {
-        width: 70px;
-        height: 70px;
+        width: 76px;
+        height: 76px;
+        left: 145px;
     }
-    
+
     .res-img-top {
         top: -5px;
-        right: -10px;
     }
-    
+
     .res-img-bottom {
-        bottom: -5px;
-        right: -10px;
+        top: 156px;
     }
 }
 
 @media (max-width: 400px) {
     .story-container > img {
-        height: 160px;
-        min-height: 140px;
+        height: 180px;
+        min-height: 150px;
     }
-    
+
     .story-content {
         padding: 20px 15px;
         margin: -25px auto 0;
     }
-    
-    .story-content h1 {
-        font-size: 18px;
-    }
-    
+
     .story-content .main-text {
         font-size: 12px;
     }
-    
+
     .story-content h3 {
         font-size: 14px;
     }
-    
+
     .story-content .sub-text {
         font-size: 12px;
     }
+   
     
-    .res-img {
-        width: 220px;
-        height: 200px;
+    .res-content h1 {
+         margin-left: -70px;
+        
     }
+    
+    .res-content p {
+        margin-left: -70px;
+    
+    }
+    .res-content p br{
+        display: none;
+    }
+ 
     
     .res-img-arc {
-        width: 260px;
-        height: 260px;
+        width: 190px;
+        height: 190px;
+        left: 0px;
+        top: -5px;
     }
-    
+
     .res-img-main {
-        width: 120px;
-        height: 120px;
+        left: 20px;
+        top: 27px;
+        width: 100px;
+        height: 100px;
     }
-    
+
     .res-img-small {
-        width: 55px;
-        height: 55px;
+        width: 50px;
+        height: 50px;
+        left: 150px;
     }
-    
+
     .res-img-top {
-        top: -10px;
-        right: -15px;
+        top: -2px;
     }
-    
+
     .res-img-bottom {
-        bottom: -10px;
-        right: -15px;
+        top: 129px;
     }
 }

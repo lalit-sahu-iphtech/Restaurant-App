@@ -34,11 +34,11 @@ export default function StoryPage() {
             <section className="res">
                 <div className="res-container">
                     <div className="res-content">
-                        <h1>Traditional Heritage, Modern Result</h1>
+                        <h1>Traditional Heritage, <br />Modern Result</h1>
                         <p>
-                            One of the reasons for pocke's popularity is its veratility. While the traditional version
+                            One of the reasons for pocke's popularity is its veratility. While the traditional <br />version
                             remains a favorite, there are now numerous variations available,
-                            allowing people to customize their poke bowls according to their preferences.
+                            <br />allowing people to customize their poke bowls according to their preferences.
                         </p>
                     </div>
 

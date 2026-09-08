@@ -6,6 +6,7 @@ import Footer from './component/Footer/Footer'
 import HomePage from './pages/HomePage/HomePage'
 import StoryPage from './pages/storyPage/StoryPage'
 import LocationPage from './pages/LocationPage/LocationPage'
+import GiftPage from './pages/GiftPage/GiftPage'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/menu" element={<MenuPage/>}/>
         <Route path="/our-story"element={<StoryPage/>}/>
         <Route path="/location"element={<LocationPage/>}/>
+        <Route path="/gift-card"element={<GiftPage/>}/>
       </Routes>
 
       <Footer/>

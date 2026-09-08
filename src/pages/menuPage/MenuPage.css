@@ -126,6 +126,7 @@
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
+    margin-bottom: 15px;
 }
 
 .see-all:hover {

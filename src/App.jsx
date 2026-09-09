@@ -30,7 +30,7 @@ function App() {
         <Route path="/sitemap"element={<Sitemap/>}/>
         <Route path="/signUp"element={<SignUp/>}/>
         <Route path="/signIn"element={<SignIn/>}/>
-        <Route path="/checkout-menu"element={<CheckoutMenu/>}/>
+        <Route path="/book-table"element={<CheckoutMenu/>}/>
 
       </Routes>
 

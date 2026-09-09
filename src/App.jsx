@@ -10,6 +10,9 @@ import GiftPage from './pages/GiftPage/GiftPage'
 import Privacy from './pages/Privacypage/privacy'
 import Terms from './pages/TermsPage/Terms'
 import Sitemap from './pages/SitemapPage/Sitemap'
+import SignUp from './pages/AuthPage/SignUp'
+import SignIn from './pages/AuthPage/SignIn'
+import CheckoutMenu from './pages/CheckoutMenuPage/CheckoutMenu'
 
 function App() {
   return (
@@ -25,6 +28,9 @@ function App() {
         <Route path="/privacy"element={<Privacy/>}/>
         <Route path="/terms"element={<Terms/>}/>
         <Route path="/sitemap"element={<Sitemap/>}/>
+        <Route path="/signUp"element={<SignUp/>}/>
+        <Route path="/signIn"element={<SignIn/>}/>
+        <Route path="/checkout-menu"element={<CheckoutMenu/>}/>
 
       </Routes>
 

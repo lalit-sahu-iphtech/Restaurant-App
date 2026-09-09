@@ -9,7 +9,7 @@ import galleryImg8 from "../../assets/img/gallery6.jpg";
 import galleryImg9 from "../../assets/img/gallery9.jpg";
 import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
 
-import "./HomePage.css"
+import "./GalleryPage.css";
 export default function GalleryPage(){
 
     return(

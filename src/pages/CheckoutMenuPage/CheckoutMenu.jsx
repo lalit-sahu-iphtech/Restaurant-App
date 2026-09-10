@@ -1,7 +1,7 @@
 import { useCart } from "../Cart/CartContext";
+import { useAuth } from "../Auth/AuthContext";
 import menuHero from "../../assets/checkoutMenu/menuHero.jpg";
 
-// Build your own bowl
 import menuImg1 from "../../assets/checkoutMenu/menu1.jpg";
 import menuImg2 from "../../assets/checkoutMenu/menu2.jpg";
 import menuImg3 from "../../assets/checkoutMenu/menu3.jpg";
@@ -21,39 +21,59 @@ import "./checkoutMenu.css";
 import { CiLocationOn } from "react-icons/ci";
 import { CiClock2 } from "react-icons/ci";
 
-import { useState, useEffect } from "react"; 
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-
 
 export default function CheckoutMenu() {
   const { addToCart } = useCart();
+  const { isAuthenticated, openAuthModal, currentUser } = useAuth();   // 👈 Add
   const [addedItems, setAddedItems] = useState({});
   const [orderMode, setOrderMode] = useState("delivery");
 
   const routerLocation = useLocation();
   const [selectedLocation, setSelectedLocation] = useState(null);
 
+  // 👇 Pending item - jab user login kare toh auto add ho
+  const [pendingItem, setPendingItem] = useState(null);
 
   useEffect(() => {
-      // Priority 1: Router state (fresh navigation)
-      if (routerLocation.state?.location) {
-          setSelectedLocation(routerLocation.state.location);
-          return;
+    if (routerLocation.state?.location) {
+      setSelectedLocation(routerLocation.state.location);
+      return;
+    }
+    const stored = localStorage.getItem("selectedLocation");
+    if (stored) {
+      try {
+        setSelectedLocation(JSON.parse(stored));
+      } catch (err) {
+        console.error("Error parsing stored location:", err);
       }
-
-      // Priority 2: localStorage (page refresh ke baad)
-      const stored = localStorage.getItem("selectedLocation");
-      if (stored) {
-          try {
-              setSelectedLocation(JSON.parse(stored));
-          } catch (err) {
-              console.error("Error parsing stored location:", err);
-          }
-      }
+    }
   }, [routerLocation.state]);
 
+  // 👇 Jab user login ho jaye aur pending item ho, toh auto-add karo
+  useEffect(() => {
+    if (isAuthenticated() && pendingItem) {
+      addToCart(pendingItem);
+      
+      // Show "Added" feedback
+      setAddedItems((prev) => ({
+        ...prev,
+        [pendingItem.id]: true,
+      }));
 
-  // Menu items data
+      setTimeout(() => {
+        setAddedItems((prev) => ({
+          ...prev,
+          [pendingItem.id]: false,
+        }));
+      }, 1500);
+
+      // Clear pending
+      setPendingItem(null);
+    }
+  }, [isAuthenticated, pendingItem, addToCart]);
+
   const menuItems = [
     {
       id: 1,
@@ -128,7 +148,24 @@ export default function CheckoutMenu() {
     { id: 12, name: "Lemonade", img: Lemonade, price: 2, category: "drinks" },
   ];
 
+  // 👇 Main handler - login check ke saath
   const handleAddToCart = (item) => {
+    // Agar logged in nahi hai
+    if (!isAuthenticated()) {
+      // Pending item save karo
+      setPendingItem({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        img: item.img,
+      });
+
+      // Login modal open karo
+      openAuthModal("signin", "/order");
+      return;
+    }
+
+    // Agar logged in hai toh direct add karo
     addToCart({
       id: item.id,
       name: item.name,
@@ -150,79 +187,75 @@ export default function CheckoutMenu() {
     }, 1500);
   };
 
-  // Split menu items into rows of 4
   const firstRow = menuItems.slice(0, 4);
   const secondRow = menuItems.slice(4, 8);
 
   return (
     <section className="checkout-menu">
       <div className="checkout-menu-container">
-        {/* Hero Image */}
         <img src={menuHero} alt="Menu Hero" className="menu-hero" />
+
         <div className="location-bar">
-            <div className="location-info">
-                <div className="location-name">
-                    <h2>{selectedLocation?.name || "Select a location"}</h2>
-                    <div className="location-row">
-                        <CiLocationOn/>
-                        <span>{selectedLocation?.address || "Not location selected"}</span>
-                        <a href="/store-location" className="change-location">Change Location</a>
-                    </div>
+          <div className="location-info">
+            <div className="location-name">
+              <h2>{selectedLocation?.name || "Select a location"}</h2>
+              <div className="location-row">
+                <CiLocationOn />
+                <span>{selectedLocation?.address || "No location selected"}</span>
+                <a href="/store-location" className="change-location">
+                  Change Location
+                </a>
+              </div>
 
-                    <div className="location-row">
-                        <CiClock2/>
-                        <span>
-                                    {selectedLocation
-                                        ? "Monday - Saturday 10:30 AM - 9:00 PM / Sunday 12:00 PM - 9:00 PM"
-                                        : "Select a store to see hours"}
-                                </span>
-                        
-                    </div>
-                </div>
-
-                <div className="order-toggle">
-                    <button
-                    className={`toggle-btn ${orderMode === "delivery" ? "active" : ""}`}
-                    onClick = {() => setOrderMode("delivery")}
-                    >
-                        Delivery
-                        </button>
-                    <button
-                    className={`toggle-btn ${orderMode === "pickup" ? "active" : ""}`}
-                    onClick={() => setOrderMode("pickup")}
-                    >
-                    Pickup
-                    </button>
-                </div>
+              <div className="location-row">
+                <CiClock2 />
+                <span>
+                  {selectedLocation
+                    ? "Monday - Saturday 10:30 AM - 9:00 PM / Sunday 12:00 PM - 9:00 PM"
+                    : "Select a store to see hours"}
+                </span>
+              </div>
             </div>
+
+            <div className="order-toggle">
+              <button
+                className={`toggle-btn ${orderMode === "delivery" ? "active" : ""}`}
+                onClick={() => setOrderMode("delivery")}
+              >
+                Delivery
+              </button>
+              <button
+                className={`toggle-btn ${orderMode === "pickup" ? "active" : ""}`}
+                onClick={() => setOrderMode("pickup")}
+              >
+                Pickup
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* Menu Section */}
         <div className="menu-section">
           <h1 className="menu-title">Menu</h1>
 
-          {/* First Row */}
           <div className="menu-grid">
             {firstRow.map((item) => (
               <div key={item.id} className="menu-card">
                 <img src={item.img} alt={item.name} className="menu-card-img" />
                 <h3 className="menu-card-title">{item.name}</h3>
                 <p className="menu-card-desc">{item.description}</p>
-                {/* Menu card ke andar */}
                 <div className="menu-card-footer">
-                <p className="menu-card-price">${item.price}</p>
-                <button
+                  <p className="menu-card-price">${item.price}</p>
+                  <button
                     className={`menu-card-btn ${addedItems[item.id] ? "added" : ""}`}
                     onClick={() => handleAddToCart(item)}
-                >
+                  >
                     {addedItems[item.id] ? "✓ Added" : "Add to cart"}
-                </button>
+                  </button>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Second Row */}
           <div className="menu-grid">
             {secondRow.map((item) => (
               <div key={item.id} className="menu-card">
@@ -230,20 +263,19 @@ export default function CheckoutMenu() {
                 <h3 className="menu-card-title">{item.name}</h3>
                 <p className="menu-card-desc">{item.description}</p>
                 <div className="menu-card-footer">
-                <p className="menu-card-price">${item.price}</p>
-                <button
+                  <p className="menu-card-price">${item.price}</p>
+                  <button
                     className={`menu-card-btn ${addedItems[item.id] ? "added" : ""}`}
                     onClick={() => handleAddToCart(item)}
-                >
+                  >
                     {addedItems[item.id] ? "✓ Added" : "Add to cart"}
-                </button>
+                  </button>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Drinks Section */}
         <section className="drinks-section">
           <div className="drinks-container">
             <h2 className="drinks-title">Drink</h2>
@@ -253,16 +285,15 @@ export default function CheckoutMenu() {
                 <div key={item.id} className="drink-card">
                   <img src={item.img} alt={item.name} className="drink-card-img" />
                   <p className="drink-card-name">{item.name}</p>
-                 {/* Drink card ke andar */}
-                    <div className="drink-card-footer">
+                  <div className="drink-card-footer">
                     <p className="drink-card-price">${item.price}</p>
                     <button
-                        className={`drink-card-btn ${addedItems[item.id] ? "added" : ""}`}
-                        onClick={() => handleAddToCart(item)}
+                      className={`drink-card-btn ${addedItems[item.id] ? "added" : ""}`}
+                      onClick={() => handleAddToCart(item)}
                     >
-                        {addedItems[item.id] ? "✓ Added" : "Add to cart"}
+                      {addedItems[item.id] ? "✓ Added" : "Add to cart"}
                     </button>
-                    </div>
+                  </div>
                 </div>
               ))}
             </div>

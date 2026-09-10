@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useCart } from "../Cart/CartContext";
 import menuHero from "../../assets/checkoutMenu/menuHero.jpg";
 
@@ -22,10 +21,37 @@ import "./checkoutMenu.css";
 import { CiLocationOn } from "react-icons/ci";
 import { CiClock2 } from "react-icons/ci";
 
+import { useState, useEffect } from "react"; 
+import { useLocation } from "react-router-dom";
+
+
 export default function CheckoutMenu() {
   const { addToCart } = useCart();
   const [addedItems, setAddedItems] = useState({});
   const [orderMode, setOrderMode] = useState("delivery");
+
+  const routerLocation = useLocation();
+  const [selectedLocation, setSelectedLocation] = useState(null);
+
+
+  useEffect(() => {
+      // Priority 1: Router state (fresh navigation)
+      if (routerLocation.state?.location) {
+          setSelectedLocation(routerLocation.state.location);
+          return;
+      }
+
+      // Priority 2: localStorage (page refresh ke baad)
+      const stored = localStorage.getItem("selectedLocation");
+      if (stored) {
+          try {
+              setSelectedLocation(JSON.parse(stored));
+          } catch (err) {
+              console.error("Error parsing stored location:", err);
+          }
+      }
+  }, [routerLocation.state]);
+
 
   // Menu items data
   const menuItems = [
@@ -136,16 +162,20 @@ export default function CheckoutMenu() {
         <div className="location-bar">
             <div className="location-info">
                 <div className="location-name">
-                    <h2>PokeBar Harbor Islands</h2>
+                    <h2>{selectedLocation?.name || "Select a location"}</h2>
                     <div className="location-row">
                         <CiLocationOn/>
-                        <span>15 State Street, Suite 1100, Boston</span>
-                        <a href="#" className="change-location">Change Location</a>
+                        <span>{selectedLocation?.address || "Not location selected"}</span>
+                        <a href="/store-location" className="change-location">Change Location</a>
                     </div>
 
                     <div className="location-row">
                         <CiClock2/>
-                        <span>Monday - Saturday 10:30 AM - 9:00 PM/</span>
+                        <span>
+                                    {selectedLocation
+                                        ? "Monday - Saturday 10:30 AM - 9:00 PM / Sunday 12:00 PM - 9:00 PM"
+                                        : "Select a store to see hours"}
+                                </span>
                         
                     </div>
                 </div>

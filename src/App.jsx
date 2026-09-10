@@ -13,28 +13,44 @@ import Sitemap from './pages/SitemapPage/Sitemap'
 import SignUp from './pages/AuthPage/SignUp'
 import SignIn from './pages/AuthPage/SignIn'
 import CheckoutMenu from './pages/CheckoutMenuPage/CheckoutMenu'
+import TablePage from './pages/BookTablePage/TablePage'  // 👈 Modal import karo
+import StoreLocationPage from './pages/StoreLocation/StoreLocationPage'
 
 function App() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   return (
     <>
-      <Navbar/>
+      <Navbar onBookTable={openModal} />
 
       <Routes>
         <Route path="/" element={<HomePage/>}/>
         <Route path="/menu" element={<MenuPage/>}/>
-        <Route path="/our-story"element={<StoryPage/>}/>
-        <Route path="/location"element={<LocationPage/>}/>
-        <Route path="/gift-card"element={<GiftPage/>}/>
-        <Route path="/privacy"element={<Privacy/>}/>
-        <Route path="/terms"element={<Terms/>}/>
-        <Route path="/sitemap"element={<Sitemap/>}/>
-        <Route path="/signUp"element={<SignUp/>}/>
-        <Route path="/signIn"element={<SignIn/>}/>
-        <Route path="/book-table"element={<CheckoutMenu/>}/>
+        <Route path="/our-story" element={<StoryPage/>}/>
+        <Route path="/location" element={<LocationPage/>}/>
+        <Route path="/store-location" element={<StoreLocationPage/>}/>
 
+        <Route path="/gift-card" element={<GiftPage/>}/>
+        <Route path="/privacy" element={<Privacy/>}/>
+        <Route path="/terms" element={<Terms/>}/>
+        <Route path="/sitemap" element={<Sitemap/>}/>
+        <Route path="/signUp" element={<SignUp/>}/>
+        <Route path="/signIn" element={<SignIn/>}/>
+        <Route path="/order" element={<CheckoutMenu/>}/>
+        
+      
       </Routes>
 
-      <Footer/>
+      
+      <TablePage 
+        isOpen={isModalOpen} 
+        onClose={closeModal} 
+      />
+
+      <Footer onBookTable={openModal}/>
     </>
   )
 }

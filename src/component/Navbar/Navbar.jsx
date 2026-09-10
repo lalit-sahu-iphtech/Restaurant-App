@@ -1,10 +1,10 @@
 import { useState } from "react";
 import logo from "../../assets/img/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaShoppingCart } from "react-icons/fa";
 import "./Navbar.css";
 
-export default function Navbar() {
+export default function Navbar({ onBookTable }) {
     const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -13,9 +13,11 @@ export default function Navbar() {
         setIsMenuOpen(false);
     };
 
+    // 👇 Sirf modal open karo, navigate NAHI karo
     const handleBookTable = () => {
-        navigate("/book-table");
+        onBookTable();     
         setIsMenuOpen(false);
+       
     };
 
     const toggleMenu = () => {
@@ -46,7 +48,6 @@ export default function Navbar() {
                         <li><Link to="/gift-card" onClick={closeMenu}>Gift card</Link></li>
                     </ul>
 
-                    {/* Mobile Buttons inside menu */}
                     <div className="nav-right-mobile">
                         <button onClick={handleOrderOnline}>Order Online</button>
                         <button onClick={handleBookTable}>Book a Table</button>
@@ -59,7 +60,6 @@ export default function Navbar() {
                     <button onClick={handleBookTable}>Book a Table</button>
                 </div>
 
-                {/* Hamburger Menu Icon - Mobile */}
                 <div className="hamburger" onClick={toggleMenu}>
                     {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
                 </div>

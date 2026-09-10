@@ -17,7 +17,16 @@ import { MdOutlineCurrencyExchange } from "react-icons/md";
 
 import "./GiftPage.css";
 
+import { useNavigate } from "react-router-dom";
+
 export default function GiftPage() {
+
+    const navigate = useNavigate();
+
+
+    const handleCheckout = () =>{
+        navigate("/store-location");
+    }
     return (
         <section className="gift-card">
             <div className="gift-card-container">
@@ -85,7 +94,7 @@ export default function GiftPage() {
                         </label>
                     </div>
 
-                    <button className="checkout-btn">Checkout</button>
+                    <button className="checkout-btn" onClick={handleCheckout}>Checkout</button>
                 </div>
 
                 {/* Right Column - Gallery */}

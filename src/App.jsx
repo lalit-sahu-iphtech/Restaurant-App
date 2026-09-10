@@ -10,11 +10,13 @@ import GiftPage from './pages/GiftPage/GiftPage'
 import Privacy from './pages/Privacypage/privacy'
 import Terms from './pages/TermsPage/Terms'
 import Sitemap from './pages/SitemapPage/Sitemap'
-import SignUp from './pages/AuthPage/SignUp'
-import SignIn from './pages/AuthPage/SignIn'
+// import SignUp from './pages/AuthPage/SignUp'
+// import SignIn from './pages/AuthPage/SignIn'
 import CheckoutMenu from './pages/CheckoutMenuPage/CheckoutMenu'
-import TablePage from './pages/BookTablePage/TablePage'  // 👈 Modal import karo
+import TablePage from './pages/BookTablePage/TablePage'
 import StoreLocationPage from './pages/StoreLocation/StoreLocationPage'
+import AuthModal from './pages/AuthPage/AuthModal'
+
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,23 +34,21 @@ function App() {
         <Route path="/our-story" element={<StoryPage/>}/>
         <Route path="/location" element={<LocationPage/>}/>
         <Route path="/store-location" element={<StoreLocationPage/>}/>
-
         <Route path="/gift-card" element={<GiftPage/>}/>
         <Route path="/privacy" element={<Privacy/>}/>
         <Route path="/terms" element={<Terms/>}/>
         <Route path="/sitemap" element={<Sitemap/>}/>
-        <Route path="/signUp" element={<SignUp/>}/>
-        <Route path="/signIn" element={<SignIn/>}/>
         <Route path="/order" element={<CheckoutMenu/>}/>
-        
-      
+
       </Routes>
 
-      
+     
       <TablePage 
         isOpen={isModalOpen} 
         onClose={closeModal} 
       />
+
+      <AuthModal/>
 
       <Footer onBookTable={openModal}/>
     </>

@@ -1,37 +1,158 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import logo from "../../assets/img/logo.svg";
-import { Link, useNavigate } from "react-router-dom";
-import { FaBars, FaTimes, FaShoppingCart } from "react-icons/fa";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { FaBars, FaTimes, FaShoppingCart, FaUser, FaSignOutAlt } from "react-icons/fa";
+import { useAuth } from "../../pages/Auth/AuthContext";
+import { useCart } from "../../pages/Cart/CartContext";
 import "./Navbar.css";
+
+const MINIMAL_NAVBAR_ROUTES = [
+    "/location",
+    "/store-location",
+    "/order",
+    "/cart",
+];
 
 export default function Navbar({ onBookTable }) {
     const navigate = useNavigate();
+    const location = useLocation();
+    const { currentUser, isAuthenticated, logout, openAuthModal } = useAuth();
+    const { cartCount } = useCart();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
+    const userMenuRef = useRef(null);
+
+    const isMinimalNavbar = MINIMAL_NAVBAR_ROUTES.includes(location.pathname);
+
+    // Close user dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
+                setIsUserMenuOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
 
     const handleOrderOnline = () => {
-        navigate("/order");
+        if (isAuthenticated()) {
+            navigate("/order");
+        } else {
+            openAuthModal("signin", "/order");
+        }
         setIsMenuOpen(false);
     };
 
-    // 👇 Sirf modal open karo, navigate NAHI karo
     const handleBookTable = () => {
-        onBookTable();     
-        setIsMenuOpen(false);
-       
-    };
-
-    const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
-    };
-
-    const closeMenu = () => {
+        onBookTable();
         setIsMenuOpen(false);
     };
 
+    const handleCartClick = () => {
+        navigate("/cart");
+        setIsMenuOpen(false);
+    };
+
+    const handleLogout = () => {
+        logout();
+        setIsUserMenuOpen(false);
+        navigate("/");
+    };
+
+    const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+    const closeMenu = () => setIsMenuOpen(false);
+    const toggleUserMenu = () => setIsUserMenuOpen(!isUserMenuOpen);
+
+    const UserDropdown = () => {
+        if (!isAuthenticated()) return null;
+
+        return (
+            <div className="user-dropdown-wrapper" ref={userMenuRef}>
+                <button className="user-icon-btn" onClick={toggleUserMenu}>
+                    <FaUser size={16} />
+                </button>
+
+                {isUserMenuOpen && (
+                    <div className="user-dropdown">
+                        <div className="dropdown-user-info">
+                            <div className="dropdown-avatar">
+                                {currentUser?.name?.charAt(0).toUpperCase() || "U"}
+                            </div>
+                            <div className="dropdown-user-details">
+                                <p className="dropdown-name">
+                                    {currentUser?.name || "User"}
+                                </p>
+                                <p className="dropdown-email">
+                                    {currentUser?.email || "user@example.com"}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="dropdown-divider"></div>
+
+                        <button className="dropdown-logout" onClick={handleLogout}>
+                            <FaSignOutAlt size={14} />
+                            <span>Logout</span>
+                        </button>
+                    </div>
+                )}
+            </div>
+        );
+    };
+
+    // ============================================
+    // MINIMAL NAVBAR
+    // ============================================
+    if (isMinimalNavbar) {
+        return (
+            <section className="navbar minimal-navbar">
+                <div className="nav-container">
+                    <div className="nav-left">
+                        <Link to="/" className="nav-logo-link">
+                            <img src={logo} alt="Poke Now Logo" />
+                            <h1>POKE NOW</h1>
+                        </Link>
+                    </div>
+
+                    <div className="nav-right minimal-right">
+                        {isAuthenticated() ? (
+                            <UserDropdown />
+                        ) : (
+                            <div className="auth-links">
+                                <button
+                                    className="auth-link"
+                                    onClick={() => openAuthModal("signin", "/")}
+                                >
+                                    Sign in
+                                </button>
+                                <span className="auth-divider">/</span>
+                                <button
+                                    className="auth-link"
+                                    onClick={() => openAuthModal("signup", "/")}
+                                >
+                                    Sign up
+                                </button>
+                            </div>
+                        )}
+
+                        <div className="cart-pill" onClick={handleCartClick}>
+                            <FaShoppingCart size={16} />
+                            <span className="cart-count">{cartCount}</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
+    // ============================================
+    // FULL NAVBAR
+    // ============================================
     return (
         <section className={`navbar ${isMenuOpen ? "menu-open" : ""}`}>
             <div className="nav-container">
-                {/* Left - Logo */}
                 <div className="nav-left">
                     <Link to="/" className="nav-logo-link" onClick={closeMenu}>
                         <img src={logo} alt="Poke Now Logo" />
@@ -39,7 +160,6 @@ export default function Navbar({ onBookTable }) {
                     </Link>
                 </div>
 
-                {/* Center - Desktop Menu */}
                 <div className={`nav-center ${isMenuOpen ? "active" : ""}`}>
                     <ul>
                         <li><Link to="/menu" onClick={closeMenu}>Menu</Link></li>
@@ -54,10 +174,15 @@ export default function Navbar({ onBookTable }) {
                     </div>
                 </div>
 
-                {/* Right - Desktop Buttons */}
                 <div className="nav-right">
-                    <button onClick={handleOrderOnline}>Order Online</button>
-                    <button onClick={handleBookTable}>Book a Table</button>
+                    <button className="order-btn" onClick={handleOrderOnline}>
+                        Order Online
+                    </button>
+                    <button className="book-btn" onClick={handleBookTable}>
+                        Book a Table
+                    </button>
+
+                    {isAuthenticated() && <UserDropdown />}
                 </div>
 
                 <div className="hamburger" onClick={toggleMenu}>

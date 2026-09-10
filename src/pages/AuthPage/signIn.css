@@ -189,6 +189,42 @@
     color: #EF3607;
     text-decoration: underline;
   }
+  .auth-form-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.auth-form-content .auth-subtitle {
+    font-size: 15px;
+    color: #6b6b6b;
+    margin-bottom: 22px;
+}
+
+.auth-form-content .link-btn {
+    background: transparent;
+    border: none;
+    color: #F96540;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    padding: 0;
+    transition: color 0.3s ease;
+}
+
+.auth-form-content .link-btn:hover {
+    color: #EF3607;
+    text-decoration: underline;
+}
+
+/* Modal me fit karne ke liye - sign-in class ki padding/height override */
+.auth-modal-form .sign-in,
+.auth-modal-form .sign-up {
+    padding: 0;
+    min-height: auto;
+    background: transparent;
+}
   
   /* ===== RESPONSIVE DESIGN ===== */
   

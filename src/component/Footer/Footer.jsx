@@ -3,7 +3,7 @@ import { FaTwitter, FaFacebookF, FaLinkedinIn, FaYoutube } from "react-icons/fa"
 import logo from "../../assets/img/logo.svg"; 
 import "./Footer.css";
 
-export default function Footer() {
+export default function Footer({ onBookTable }) {
     return (
         <footer className="footer">
             <div className="footer-container">
@@ -24,8 +24,13 @@ export default function Footer() {
 
                     <div className="footer-right">
                         <div className="footer-buttons">
-                            <Link to="/order-online" className="btn-outline">Order Online</Link>
-                            <Link to="/book-table" className="btn-filled">Book a Table</Link>
+                            <Link to="/order" className="btn-outline">Order Online</Link>
+                             <button 
+                            className="btn-filled" 
+                                    onClick={onBookTable}
+                                >
+                            Book a Table
+                        </button>
                         </div>
 
                         <p className="footer-address">

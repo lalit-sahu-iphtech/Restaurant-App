@@ -7,7 +7,7 @@ import { useCart } from "../../pages/Cart/CartContext";
 import "./Navbar.css";
 
 const MINIMAL_NAVBAR_ROUTES = [
-    "/location",
+    
     "/store-location",
     "/order",
     "/cart",

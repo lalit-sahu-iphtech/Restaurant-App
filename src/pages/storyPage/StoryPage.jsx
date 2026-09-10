@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom"
 import storyImg from "../../assets/img/ourStory.jpg"
 import res1 from "../../assets/img/res1.jpg"
 import res2 from "../../assets/img/res2.jpg"
@@ -7,6 +8,12 @@ import LocationAndGallery from "../HomePage/LocationAndGallery"
 import "./storyPage.css"
 
 export default function StoryPage() {
+
+    const navigate = useNavigate();
+
+    const handleClick = () =>{
+        navigate("/order");
+    }
     return (
         <>
             <section className="story">
@@ -26,7 +33,7 @@ export default function StoryPage() {
                             ingredients. It is often served over a bed of rice and topped with various toppings like seaweed,
                             cucumber, avocado, and sesame seeds.
                         </p>
-                        <button className="order-btn">Order Now</button>
+                        <button className="order-btn"onClick={handleClick}>Order Now</button>
                     </div>
                 </div>
             </section>

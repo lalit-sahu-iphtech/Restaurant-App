@@ -44,8 +44,16 @@ import SrirachaAioli from "../../assets/img/menuFlavor4.jpg";
 import "./MenuPage.css";
 
 import Testimonial from "./Testimonial";
+import { useNavigate } from "react-router-dom";
 
 export default function MenuPage() {
+
+    const navigate = useNavigate();
+
+    const handleClick = () =>{
+        navigate("/order");
+    }
+
     const bowlSteps = [
         {
             step: 1,
@@ -110,25 +118,25 @@ export default function MenuPage() {
                             <img src={CrunchBowl} alt="California Crunch Bowl" />
                             <h3>California Crunch Bowl</h3>
                             <p>Shrimp • Crab • Cucumber • Green Onion • Carrot • Edamame • Avocado • Soy Sauce • Tempura Flakes • Spicy Mayo Drizzle</p>
-                            <button>Order Now</button>
+                            <button onClick={handleClick}>Order Now</button>
                         </div>
                         <div className="menu-item">
                             <img src={RainbowBowl} alt="Rainbow Bowl" />
                             <h3>Rainbow Bowl</h3>
                             <p>Crab • Salmon* • Avocado • Cucumber • Pineapple • Carrot • Sesame Seeds • House Sauce</p>
-                            <button>Order Now</button>
+                            <button onClick={handleClick}>Order Now</button>
                         </div>
                         <div className="menu-item">
                             <img src={VolcanoBowl} alt="Volcano Bowl" />
                             <h3>Volcano Bowl</h3>
                             <p>Spicy Salmon* • Spicy Tuna* • Green Onion • Cabbage • Cucumber • Carrot • Jalapeno • Ginger</p>
-                            <button>Order Now</button>
+                            <button onClick={handleClick}>Order Now</button>
                         </div>
                         <div className="menu-item">
                             <img src={TunaLoverBowl} alt="Tuna Lover's Bowl" />
                             <h3>Tuna Lover's Bowl</h3>
                             <p>Tuna* • Ground Spicy Tuna* • Avocado • Carrot • Cucumber • Edamame • Watermelon • Radish</p>
-                            <button>Order Now</button>
+                            <button onClick={handleClick}>Order Now</button>
                         </div>
                     </div>
 
@@ -137,25 +145,25 @@ export default function MenuPage() {
                             <img src={DynamiteBowl} alt="Dynamite Bowl" />
                             <h3>Dynamite Bowl</h3>
                             <p>Tuna* • Shrimp • Carrot • Mango • Jalapeno • Cucumber • Chili Flakes • Sesame Seeds</p>
-                            <button>Order Now</button>
+                            <button onClick={handleClick}>Order Now</button>
                         </div>
                         <div className="menu-item">
                             <img src={DukeBowl} alt="The Duke Bowl" />
                             <h3>The Duke Bowl</h3>
                             <p>Tuna* • Salmon • Shrimp • Seaweed • Salad • Jalapeno • Sweet Onion • Edamame • Cucumber</p>
-                            <button>Order Now</button>
+                            <button onClick={handleClick}>Order Now</button>
                         </div>
                         <div className="menu-item">
                             <img src={AlohaVeganBowl} alt="Aloha Vegan Bowl" />
                             <h3>Aloha Vegan Bowl</h3>
                             <p>Tofu • Avocado • Carrot • Cabbage • Edamame • Watermelon Radish • Red Onion • Ginger</p>
-                            <button>Order Now</button>
+                            <button onClick={handleClick}>Order Now</button>
                         </div>
                         <div className="menu-item">
                             <img src={SalmonBowl} alt="Salmon Bowl" />
                             <h3>Salmon Bowl</h3>
                             <p>Spicy Salmon* • Green Onion • Avocado • Cucumber • Ginger • House Sauce mixed with light sriracha • Furikake • Lemon</p>
-                            <button>Order Now</button>
+                            <button onClick={handleClick}>Order Now</button>
                         </div>
                     </div>
 
@@ -188,7 +196,7 @@ export default function MenuPage() {
                         ))}
 
                       <div className="menu-order-btn">
-                      <button className="order-now-btn">Order Now</button>
+                      <button className="order-now-btn" onClick={handleClick}>Order Now</button>
                       </div>
                     </div>
                 </section>

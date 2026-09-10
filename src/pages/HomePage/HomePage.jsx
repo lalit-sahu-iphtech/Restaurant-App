@@ -23,6 +23,7 @@ import { FaChevronRight } from "react-icons/fa";
 import "./HomePage.css"
 import { useState } from "react";
 import LocationAndGallery from "./LocationAndGallery";
+import { useNavigate } from "react-router-dom";
 
 const testimonials = [
     {
@@ -35,11 +36,15 @@ const testimonials = [
 ]
 
 export default function HomePage(){
+    const navigate = useNavigate();
     const[activeIdx, setActiveIdx] = useState(0);
     const current = testimonials[activeIdx];
 
     const nextTestimonial = () =>{
         setActiveIdx((prev) => (prev + 1) % testimonials.length);
+    }
+    const handleClick = () =>{
+        navigate("/order");
     }
 
     return(
@@ -51,7 +56,7 @@ export default function HomePage(){
                 <div className="hero-content">
                     <h1>ASIAN INSPIRED BOWLS</h1>
                     <p>Fresh, healthy, delicious</p>
-                    <button>Order Now</button>
+                    <button onClick={handleClick}>Order Now</button>
                 </div>
 
             </div>
@@ -82,25 +87,28 @@ export default function HomePage(){
                             <img src={CrunchBowl} alt="California Crunch Bowl" />
                             <h3>California Crunch Bowl</h3>
                             <p>Shrimp • Crab • Cucumber • Green Onion • Carrot • Edamame • Avocado • Soy Sauce • Tempura Flakes • Spicy Mayo Drizzle</p>
-                            <button>Order Now</button>
+                            <button onClick={handleClick}>Order Now</button>
                         </div>
                         <div className="hero-item">
                             <img src={RainbowBowl} alt="Rainbow Bowl" />
                             <h3>Rainbow Bowl</h3>
                             <p>Crab • Salmon* • Avocado • Cucumber • Pineapple • Carrot • Sesame Seeds • House Sauce</p>
-                            <button>Order Now</button>
+                            <button onClick={handleClick}>Order Now</button>
+
                         </div>
                         <div className="hero-item">
                             <img src={VolcanoBowl} alt="Volcano Bowl" />
                             <h3>Volcano Bowl</h3>
                             <p>Spicy Salmon* • Spicy Tuna* • Green Onion • Cabbage • Cucumber • Carrot • Jalapeno • Ginger</p>
-                            <button>Order Now</button>
+                            <button onClick={handleClick}>Order Now</button>
+
                         </div>
                         <div className="hero-item">
                             <img src={TunaLoverBowl} alt="Tuna Lover's Bowl" />
                             <h3>Tuna Lover's Bowl</h3>
                             <p>Tuna* • Ground Spicy Tuna* • Avocado • Carrot • Cucumber • Edamame • Watermelon • Radish</p>
-                            <button>Order Now</button>
+                            <button onClick={handleClick}>Order Now</button>
+
                         </div>
                     </div>
 

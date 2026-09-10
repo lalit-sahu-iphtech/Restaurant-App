@@ -4,8 +4,17 @@ import locationBowl2 from "../../assets/img/location-bowl2.jpg";
 
 import "./HomePage.css"
 import GalleryPage from "./GalleryPage";
+import { useNavigate } from "react-router-dom";
+
 
 export default function LocationAndGallery(){
+
+    const navigate = useNavigate();
+
+
+    const handleClick = ()=>{
+         navigate("/store-location");
+    }
 
     return(
 
@@ -18,7 +27,7 @@ export default function LocationAndGallery(){
                             Serving fresh fish daily at Boston Harbor Islands, Boylston St,
                             Congress St, Kendall Square, Cambridge St, Haviland St.
                         </p>
-                        <button>Locations &amp; Hours</button>
+                        <button onClick={handleClick}>Locations &amp; Hours</button>
                     </div>
 
                     <div className="locations-images">

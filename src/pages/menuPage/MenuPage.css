@@ -114,7 +114,7 @@
     background: #FEE1DA;
 }
 
-.see-all {
+.menu-see-all {
     display: block;
     margin: 40px auto 0;
     padding: 14px 50px;
@@ -129,7 +129,7 @@
     margin-bottom: 15px;
 }
 
-.see-all:hover {
+.menu-see-all:hover {
     background: #1a1a1a;
     color: #ffffff;
     border-color: #1a1a1a;
@@ -365,7 +365,7 @@
         margin-top: -45px;
     }
     
-    .see-all {
+    .menu-see-all {
         padding: 12px 35px;
         font-size: 14px;
         margin-top: 30px;

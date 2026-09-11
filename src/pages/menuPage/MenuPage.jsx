@@ -54,6 +54,10 @@ export default function MenuPage() {
         navigate("/order");
     }
 
+    const handleSeeAll = ()=>{
+        navigate("/menu/see-all")
+    }
+
     const bowlSteps = [
         {
             step: 1,
@@ -167,7 +171,7 @@ export default function MenuPage() {
                         </div>
                     </div>
 
-                    <button className="see-all">See All</button>
+                    <button className="menu-see-all"onClick={handleSeeAll}>See All</button>
                 </div>
                 
                 <section className="build-bowl">

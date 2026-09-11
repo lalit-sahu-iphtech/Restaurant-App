@@ -27,13 +27,26 @@ import { useNavigate } from "react-router-dom";
 
 const testimonials = [
     {
-        name : "Lauren Martinez",
-        avatar : avatar1,
+        name: "Lauren Martinez",
+        avatar: avatar1,
         text: "I'm a big fan of poke bowls, and this place definitely delivers. The quality of the ingredients is top-notch, and the variety of toppings allows you to customize your bowl.",
-
     },
-
-]
+    {
+        name: "John Miller",
+        avatar: avatar2,
+        text: "Absolutely loved the freshness of the ingredients. The Volcano Bowl was bursting with flavors and the spice level was just perfect. Will definitely order again!",
+    },
+    {
+        name: "Sarah Chen",
+        avatar: avatar3,
+        text: "Best poke place in town! The customization options are endless, and the staff is super friendly. The Rainbow Bowl is my personal favorite. Highly recommended!",
+    },
+    {
+        name: "David Park",
+        avatar: avatar4,
+        text: "Amazing quality and quick delivery. I've tried almost every bowl on their menu, and none of them disappointed. The Duke Bowl is a must-try for seafood lovers!",
+    },
+];
 
 export default function HomePage(){
     const navigate = useNavigate();
@@ -45,6 +58,9 @@ export default function HomePage(){
     }
     const handleClick = () =>{
         navigate("/order");
+    }
+    const handleMenu = () =>{
+        navigate("/menu");
     }
 
     return(
@@ -113,7 +129,7 @@ export default function HomePage(){
                     </div>
 
                     
-                    <button className="explore-more">Explore more</button>
+                    <button className="explore-more" onClick={handleMenu}>Explore more</button>
                  
 
                  
@@ -134,8 +150,8 @@ export default function HomePage(){
                         <img src={av} 
                         key={i}
                         alt="customer-avatar" 
-                        className={i === activeIdx ? "active-avtar" : ""}
-                        // onClick={() => setActiveIdx(i)}
+                        className={i === activeIdx ? "active-avatar" : ""}
+                        onClick={() => setActiveIdx(i)}
                         
                         />
                     ))}

@@ -16,6 +16,10 @@ import CheckoutMenu from './pages/CheckoutMenuPage/CheckoutMenu'
 import TablePage from './pages/BookTablePage/TablePage'
 import StoreLocationPage from './pages/StoreLocation/StoreLocationPage'
 import AuthModal from './pages/AuthPage/AuthModal'
+import OrderReview from './pages/OrderReview/OrderReview'
+import Payment from './pages/Payment/Payment'
+import ThankYou from './pages/ThankYou/ThankYou'
+import SeeAll from './pages/SeeAll/SeeAll'
 
 
 function App() {
@@ -39,6 +43,10 @@ function App() {
         <Route path="/terms" element={<Terms/>}/>
         <Route path="/sitemap" element={<Sitemap/>}/>
         <Route path="/order" element={<CheckoutMenu/>}/>
+        <Route path="/order-review" element={<OrderReview />} />
+        <Route path="/payment" element={<Payment />} />
+        <Route path="/thank-you" element={<ThankYou />} />
+        <Route path="/menu/see-all"element={<SeeAll/>}/>
 
       </Routes>
 

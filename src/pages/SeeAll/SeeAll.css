@@ -80,6 +80,7 @@
     align-items: center;
     text-align: center;
     transition: transform 0.3s ease;
+    margin-bottom: 40px;
 }
 
 .see-all-card:hover {
@@ -264,5 +265,11 @@
     .see-all-order-btn {
         padding: 12px 35px;
         font-size: 14px;
+    }
+}
+
+@media (max-width : 400px){
+    .see-all-card {
+        margin-bottom: 40px;
     }
 }

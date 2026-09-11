@@ -1,5 +1,5 @@
 
-import heroImg from "../../assets/img/home.jpg"
+import heroImg from "../../assets/img/home.png"
 
 
 import CrunchBowl from "../../assets/img/menu2.jpg"

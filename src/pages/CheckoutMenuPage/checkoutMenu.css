@@ -154,7 +154,24 @@
   .menu-card-btn.added:hover {
     background: #218838;
   }
-  
+  /* 👇 In Cart state - Red button */
+.menu-card-btn.in-cart {
+  background: #dc3545;
+  color: #ffffff;
+}
+
+.menu-card-btn.in-cart:hover {
+  background: #c82333;
+}
+
+.drink-card-btn.in-cart {
+  background: #dc3545;
+  color: #ffffff;
+}
+
+.drink-card-btn.in-cart:hover {
+  background: #c82333;
+}
   /* ===== DRINKS SECTION ===== */
   .drinks-section {
   

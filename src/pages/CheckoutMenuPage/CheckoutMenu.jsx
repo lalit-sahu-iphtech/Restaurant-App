@@ -18,40 +18,67 @@ import Lemonade from "../../assets/checkoutMenu/menu12.jpg";
 
 import "./checkoutMenu.css";
 
+import CustomizeBowlModal from "../BowlModalPage/CustomizeBowlModal";
+
 import { CiLocationOn } from "react-icons/ci";
 import { CiClock2 } from "react-icons/ci";
 
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function CheckoutMenu() {
-  const { addToCart } = useCart();
-  const { isAuthenticated, openAuthModal, currentUser } = useAuth();   // 👈 Add
+  const navigate = useNavigate();
+  const { addToCart, removeFromCart, isInCart } = useCart();
+  const { isAuthenticated, openAuthModal, currentUser } = useAuth();   
   const [addedItems, setAddedItems] = useState({});
   const [orderMode, setOrderMode] = useState("delivery");
 
+  const[isCustomizeOpen, setIsCustomizeOpen] = useState(false);
+  const[customizeItem, setCustomizeItem] = useState(null)
+
   const routerLocation = useLocation();
   const [selectedLocation, setSelectedLocation] = useState(null);
+  const[isLocationChecked, setIsLocationChecked] = useState(false);
 
-  // 👇 Pending item - jab user login kare toh auto add ho
+  //  Pending item - jab user login kare toh auto add ho
   const [pendingItem, setPendingItem] = useState(null);
 
   useEffect(() => {
+    // Priority 1: Router state
     if (routerLocation.state?.location) {
       setSelectedLocation(routerLocation.state.location);
+      localStorage.setItem(
+        "selectedLocation",
+        JSON.stringify(routerLocation.state.location)
+      );
+      setIsLocationChecked(true);
       return;
     }
+
+    // Priority 2: localStorage
     const stored = localStorage.getItem("selectedLocation");
     if (stored) {
       try {
-        setSelectedLocation(JSON.parse(stored));
+        const parsed = JSON.parse(stored);
+        setSelectedLocation(parsed);
+        setIsLocationChecked(true);
+        return;
       } catch (err) {
         console.error("Error parsing stored location:", err);
+        localStorage.removeItem("selectedLocation");
       }
     }
-  }, [routerLocation.state]);
 
-  // 👇 Jab user login ho jaye aur pending item ho, toh auto-add karo
+    //  No location found → Redirect to store-location
+    navigate("/store-location", {
+      state: {
+        from: "/order",
+        message: "Please select a location first to place an order",
+      },
+    });
+  }, [routerLocation.state, navigate]);
+
+  //  Jab user login ho jaye aur pending item ho, toh auto-add karo
   useEffect(() => {
     if (isAuthenticated() && pendingItem) {
       addToCart(pendingItem);
@@ -148,7 +175,7 @@ export default function CheckoutMenu() {
     { id: 12, name: "Lemonade", img: Lemonade, price: 2, category: "drinks" },
   ];
 
-  // 👇 Main handler - login check ke saath
+
   const handleAddToCart = (item) => {
     // Agar logged in nahi hai
     if (!isAuthenticated()) {
@@ -158,6 +185,7 @@ export default function CheckoutMenu() {
         name: item.name,
         price: item.price,
         img: item.img,
+        description : item.description,
       });
 
       // Login modal open karo
@@ -165,12 +193,26 @@ export default function CheckoutMenu() {
       return;
     }
 
+    // Build your Own Poke Bowl - customize modal
+    if(item.id === 1){
+      setCustomizeItem(item);
+      setIsCustomizeOpen(true);
+      return;
+    }
+
+    if (isInCart(item.id)) {
+      removeFromCart(item.id);
+      return;
+    }
+
+
     // Agar logged in hai toh direct add karo
     addToCart({
       id: item.id,
       name: item.name,
       price: item.price,
       img: item.img,
+      description:item.description,
     });
 
     // Show feedback animation
@@ -187,8 +229,21 @@ export default function CheckoutMenu() {
     }, 1500);
   };
 
+  // Custom bowl add to cart
+  const handleAddCustomBowl = (customItem) =>{
+    addToCart(customItem);
+  }
+
   const firstRow = menuItems.slice(0, 4);
   const secondRow = menuItems.slice(4, 8);
+
+  if (!isLocationChecked) {
+    return (
+      <div className="checkout-loading">
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <section className="checkout-menu">
@@ -245,12 +300,12 @@ export default function CheckoutMenu() {
                 <p className="menu-card-desc">{item.description}</p>
                 <div className="menu-card-footer">
                   <p className="menu-card-price">${item.price}</p>
-                  <button
-                    className={`menu-card-btn ${addedItems[item.id] ? "added" : ""}`}
-                    onClick={() => handleAddToCart(item)}
-                  >
-                    {addedItems[item.id] ? "✓ Added" : "Add to cart"}
-                  </button>
+                 <button
+                className={`menu-card-btn ${isInCart(item.id) ? "in-cart" : ""}`}
+                onClick={() => handleAddToCart(item)}
+              >
+                {isInCart(item.id) ? "Remove from cart" : "Add to cart"}
+              </button>
                 </div>
               </div>
             ))}
@@ -264,12 +319,12 @@ export default function CheckoutMenu() {
                 <p className="menu-card-desc">{item.description}</p>
                 <div className="menu-card-footer">
                   <p className="menu-card-price">${item.price}</p>
-                  <button
-                    className={`menu-card-btn ${addedItems[item.id] ? "added" : ""}`}
-                    onClick={() => handleAddToCart(item)}
-                  >
-                    {addedItems[item.id] ? "✓ Added" : "Add to cart"}
-                  </button>
+                 <button
+                className={`menu-card-btn ${isInCart(item.id) ? "in-cart" : ""}`}
+                onClick={() => handleAddToCart(item)}
+              >
+                {isInCart(item.id) ? "Remove from cart" : "Add to cart"}
+              </button>
                 </div>
               </div>
             ))}
@@ -288,11 +343,11 @@ export default function CheckoutMenu() {
                   <div className="drink-card-footer">
                     <p className="drink-card-price">${item.price}</p>
                     <button
-                      className={`drink-card-btn ${addedItems[item.id] ? "added" : ""}`}
-                      onClick={() => handleAddToCart(item)}
-                    >
-                      {addedItems[item.id] ? "✓ Added" : "Add to cart"}
-                    </button>
+                    className={`drink-card-btn ${isInCart(item.id) ? "in-cart" : ""}`}
+                    onClick={() => handleAddToCart(item)}
+                  >
+                    {isInCart(item.id) ? "Remove from cart" : "Add to cart"}
+                  </button>
                   </div>
                 </div>
               ))}
@@ -300,6 +355,12 @@ export default function CheckoutMenu() {
           </div>
         </section>
       </div>
+      <CustomizeBowlModal
+      isOpen={isCustomizeOpen}
+      item={customizeItem}
+      onClose={() => setIsCustomizeOpen(false)}
+      onAddToCart={handleAddCustomBowl}
+      />
     </section>
   );
 }

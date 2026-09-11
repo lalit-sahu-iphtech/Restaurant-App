@@ -1,9 +1,12 @@
 import { FaTimes } from "react-icons/fa";
 import tableImg from "../../assets/img/gallery2.jpg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {useAuth} from "../Auth/AuthContext"
 import "./TablePage.css";
 
 export default function TablePage({ isOpen, onClose }) {
+
+    const{isAuthenticated, currentUser, openAuthModal} = useAuth();
     const [formData, setFormData] = useState({
         name: "",
         guests: "",
@@ -27,6 +30,14 @@ export default function TablePage({ isOpen, onClose }) {
     ];
     const timeOptions = ["11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM"];
 
+     useEffect(()=>{
+        if(isAuthenticated() && currentUser?.name){
+            setFormData((prev)=>({
+                ...prev, 
+                name:currentUser.name,
+            }))
+        }
+     }, [isAuthenticated, currentUser])
     const validateForm = () => {
         const newErrors = {};
 
@@ -74,6 +85,11 @@ export default function TablePage({ isOpen, onClose }) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        if(!isAuthenticated()){
+            openAuthModal("signin");
+            return;
+        }
+
         if (validateForm()) {
             const reservations = JSON.parse(localStorage.getItem("reservations") || "[]");
 
@@ -115,6 +131,32 @@ export default function TablePage({ isOpen, onClose }) {
                         your table is ready upon your arrival.
                     </p>
 
+                    {!isAuthenticated () && (
+                        <div className="login-required-banner">Please
+                        <button
+                        type="button"
+                        className="banner-link"
+                        onClick={() =>{
+                            onClose();
+                            openAuthModal("signin");
+                        }}
+                        >Sign In</button>
+                        or
+                        <button
+                                type="button"
+                                className="banner-link"
+                                onClick={() => {
+                                    onClose();
+                                    openAuthModal("signup");
+                                }}
+                            >
+                                Sign Up
+                            </button>
+                            to book a table.
+                        </div>
+                       
+                    )}
+
                     <form onSubmit={handleSubmit} className="reservation-form">
                         {/* Name */}
                         <div className="form-group">
@@ -126,6 +168,7 @@ export default function TablePage({ isOpen, onClose }) {
                                 value={formData.name}
                                 onChange={handleChange}
                                 className={errors.name ? "error" : ""}
+                                disabled={!isAuthenticated()}
                             />
                             {errors.name && <span className="error-text">{errors.name}</span>}
                         </div>
@@ -139,6 +182,8 @@ export default function TablePage({ isOpen, onClose }) {
                                     value={formData.guests}
                                     onChange={handleChange}
                                     className={errors.guests ? "error" : ""}
+                                     disabled={!isAuthenticated()}
+
                                 >
                                     <option value="">Number of guests</option>
                                     {guestsOptions.map(g => (
@@ -155,6 +200,8 @@ export default function TablePage({ isOpen, onClose }) {
                                     value={formData.restaurant}
                                     onChange={handleChange}
                                     className={errors.restaurant ? "error" : ""}
+                                   disabled={!isAuthenticated()}
+
                                 >
                                     <option value="">Your favorite place?</option>
                                     {restaurantOptions.map(r => (
@@ -174,6 +221,8 @@ export default function TablePage({ isOpen, onClose }) {
                                     value={formData.date}
                                     onChange={handleChange}
                                     className={errors.date ? "error" : ""}
+                                    disabled={!isAuthenticated()}
+
                                 >
                                     <option value="">Select date</option>
                                     {dateOptions.map(d => (
@@ -190,6 +239,8 @@ export default function TablePage({ isOpen, onClose }) {
                                     value={formData.time}
                                     onChange={handleChange}
                                     className={errors.time ? "error" : ""}
+                                     disabled={!isAuthenticated()}
+
                                 >
                                     <option value="">Select time</option>
                                     {timeOptions.map(t => (
@@ -200,8 +251,12 @@ export default function TablePage({ isOpen, onClose }) {
                             </div>
                         </div>
 
-                        <button type="submit" className="book-table-btn">
-                            Book a table
+                        <button type="submit" 
+                        className="book-table-btn"
+                        disabled={!isAuthenticated()}
+                        
+                        >
+                            {isAuthenticated() ? "Book a table" : "Login to Book"}
                         </button>
                     </form>
                 </div>

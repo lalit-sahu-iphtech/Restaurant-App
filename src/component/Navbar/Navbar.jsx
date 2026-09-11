@@ -13,7 +13,8 @@ const MINIMAL_NAVBAR_ROUTES = [
     "/cart",
     "/order-review",
     "/payment",
-    "/thank-you"
+    "/thank-you",
+    "/menu/see-all",
 ];
 
 export default function Navbar({ onBookTable }) {

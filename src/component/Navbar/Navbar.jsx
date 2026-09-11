@@ -11,6 +11,9 @@ const MINIMAL_NAVBAR_ROUTES = [
     "/store-location",
     "/order",
     "/cart",
+    "/order-review",
+    "/payment",
+    "/thank-you"
 ];
 
 export default function Navbar({ onBookTable }) {
@@ -51,7 +54,7 @@ export default function Navbar({ onBookTable }) {
     };
 
     const handleCartClick = () => {
-        navigate("/cart");
+        navigate("/order-review");
         setIsMenuOpen(false);
     };
 
@@ -82,10 +85,10 @@ export default function Navbar({ onBookTable }) {
                             </div>
                             <div className="dropdown-user-details">
                                 <p className="dropdown-name">
-                                    {currentUser?.name || "User"}
+                                    {currentUser.name}
                                 </p>
                                 <p className="dropdown-email">
-                                    {currentUser?.email || "user@example.com"}
+                                    {currentUser.email }
                                 </p>
                             </div>
                         </div>

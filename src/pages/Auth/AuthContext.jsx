@@ -13,22 +13,22 @@ export function AuthProvider({ children }) {
 
     useEffect(() => {
         try {
-            const storedUser = localStorage.getItem("currentUser");
+            const storedUser = localStorage.getItem("CurrentUser");
             if (storedUser) setCurrentUser(JSON.parse(storedUser));
         } catch (error) {
-            localStorage.removeItem("currentUser");
+            localStorage.removeItem("CurrentUser");
         }
         setIsLoading(false);
     }, []);
 
     const login = (userData) => {
         setCurrentUser(userData);
-        localStorage.setItem("currentUser", JSON.stringify(userData));
+        localStorage.setItem("CurrentUser", JSON.stringify(userData));
     };
 
     const logout = () => {
         setCurrentUser(null);
-        localStorage.removeItem("currentUser");
+        localStorage.removeItem("CurrentUser");
     };
 
     const isAuthenticated = () => currentUser !== null;

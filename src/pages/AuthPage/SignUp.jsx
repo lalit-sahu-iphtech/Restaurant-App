@@ -84,7 +84,7 @@ export default function SignUp() {
             login(newUser);
             setIsSubmitted(true);
 
-            // 👇 Close modal after success
+            //  Close modal after success
             setTimeout(() => {
                 closeAuthModal();
                 setFormData({ name: "", email: "", password: "" });

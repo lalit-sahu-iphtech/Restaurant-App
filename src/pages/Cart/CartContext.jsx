@@ -29,22 +29,28 @@ export function CartProvider({ children }) {
     const total = items.reduce((sum, item) => sum + item.quantity, 0);
     setCartCount(total);
   };
-
+  const updateCartItem = (itemId, updatedData) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === itemId ? { ...item, ...updatedData } : item
+      )
+    );
+  };
   // Add item to cart
   const addToCart = (item) => {
+    const qty = item.quantity || 1;  
+  
     setCartItems(prevItems => {
       const existingItem = prevItems.find(i => i.id === item.id);
       
       if (existingItem) {
-        // If item exists, increase quantity
         return prevItems.map(i =>
           i.id === item.id
-            ? { ...i, quantity: i.quantity + 1 }
+            ? { ...i, quantity: i.quantity + qty }   
             : i
         );
       } else {
-        // If new item, add with quantity 1
-        return [...prevItems, { ...item, quantity: 1 }];
+        return [...prevItems, { ...item, quantity: qty }];  
       }
     });
   };
@@ -72,6 +78,7 @@ export function CartProvider({ children }) {
   const deleteFromCart = (itemId) => {
     setCartItems(prevItems => prevItems.filter(i => i.id !== itemId));
   };
+  
 
   // Clear entire cart
   const clearCart = () => {
@@ -82,20 +89,32 @@ export function CartProvider({ children }) {
   const getTotalPrice = () => {
     return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
   };
+//  Check if item is in cart
+const isInCart = (itemId) => {
+  return cartItems.some((item) => item.id === itemId);
+};
 
-  return (
-    <CartContext.Provider value={{
-      cartItems,
-      cartCount,
-      addToCart,
-      removeFromCart,
-      deleteFromCart,
-      clearCart,
-      getTotalPrice
-    }}>
-      {children}
-    </CartContext.Provider>
-  );
+//  Get cart item by id
+const getCartItem = (itemId) => {
+  return cartItems.find((item) => item.id === itemId);
+};
+
+return (
+  <CartContext.Provider value={{
+    cartItems,
+    cartCount,
+    addToCart,
+    removeFromCart,
+    deleteFromCart,
+    updateCartItem,
+    clearCart,
+    getTotalPrice,
+    isInCart,        
+    getCartItem,     
+  }}>
+    {children}
+  </CartContext.Provider>
+);
 }
 
 // Custom hook to use cart context

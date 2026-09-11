@@ -38,22 +38,22 @@ export function CartProvider({ children }) {
   };
   // Add item to cart
   const addToCart = (item) => {
-    const qty = item.quantity || 1;  
-  
+    const qty = item.quantity || 1;
+
     setCartItems(prevItems => {
-      const existingItem = prevItems.find(i => i.id === item.id);
-      
-      if (existingItem) {
-        return prevItems.map(i =>
-          i.id === item.id
-            ? { ...i, quantity: i.quantity + qty }   
-            : i
-        );
-      } else {
-        return [...prevItems, { ...item, quantity: qty }];  
-      }
+        const existingItem = prevItems.find(i => i.id === item.id);
+
+        if (existingItem) {
+            return prevItems.map(i =>
+                i.id === item.id
+                    ? { ...i, quantity: i.quantity + qty }
+                    : i
+            );
+        } else {
+            return [...prevItems, { ...item, quantity: qty }];
+        }
     });
-  };
+};
 
   // Remove item from cart
   const removeFromCart = (itemId) => {

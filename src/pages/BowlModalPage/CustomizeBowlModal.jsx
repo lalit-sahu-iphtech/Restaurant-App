@@ -75,29 +75,39 @@ export default function CustomizeBowlModal({isOpen, item, onClose, onAddToCart})
 const incrementQty = () => setQuantity((q)=> q+1);
 const decrementQty = () => setQuantity((q) => (q > 1 ? q-1 : 1));
 
-const handleAddToCart = () =>{
-    const base = baseOptions.find((b)=> b.id === selectedBase);
-    const flavor = flavorOptions.find((f)=> f.id === selectedFlavor);
-    const proteinLabels = selectedProteins.map((id)=> proteinOptions.find((p) => p.id === id)?.label).filter(Boolean);
-    const toppingLabels = selectedToppings.map((id) => toppingOptions.find((t) => t.id === id)?.label).filter(Boolean);
-    const mixInLabels = selectedMixIns.map((id) => mixInOptions.find((m) => m.id === id)?.label).filter(Boolean);
+const handleAddToCart = () => {
+  const base = baseOptions.find((b) => b.id === selectedBase);
+  const flavor = flavorOptions.find((f) => f.id === selectedFlavor);
+  const proteinLabels = selectedProteins
+      .map((id) => proteinOptions.find((p) => p.id === id)?.label)
+      .filter(Boolean);
+  const toppingLabels = selectedToppings
+      .map((id) => toppingOptions.find((t) => t.id === id)?.label)
+      .filter(Boolean);
+  const mixInLabels = selectedMixIns
+      .map((id) => mixInOptions.find((m) => m.id === id)?.label)
+      .filter(Boolean);
 
-    const customItem = {
-        id: `custom-${Date.now()}`,
-        name: "Build Your Own Poke Bowl",
-        img: item?.img,
-        base: base?.label,
-        proteins: proteinLabels,
-        toppings: toppingLabels,
-        mixIns: mixInLabels,
-        flavor: flavor?.label,
-        price: getItemPrice(),
-        quantity,
-      };
-      onAddToCart(customItem);
-      onClose();
+  const customItem = {
+      id: `custom-${Date.now()}`,
+      name: "Build Your Own Poke Bowl",
+      img: item?.img,
+      base: base?.label,
+      proteins: proteinLabels,
+      toppings: toppingLabels,
+      mixIns: mixInLabels,
+      flavor: flavor?.label,
 
-}
+     
+      price: getItemPrice() * quantity,
+
+      
+      quantity: 1,
+  };
+
+  onAddToCart(customItem);
+  onClose();
+};
 if(!isOpen) return null;
     return(
         <div className="cb-overlay" onClick={onClose}>

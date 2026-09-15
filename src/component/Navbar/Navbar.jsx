@@ -5,6 +5,7 @@ import { FaBars, FaTimes, FaShoppingCart, FaUser, FaSignOutAlt } from "react-ico
 import { useAuth } from "../../pages/Auth/AuthContext";
 import { useCart } from "../../pages/Cart/CartContext";
 import "./Navbar.css";
+import { useToast } from "../../context/ToastContext";
 
 const MINIMAL_NAVBAR_ROUTES = [
     
@@ -20,6 +21,8 @@ const MINIMAL_NAVBAR_ROUTES = [
 export default function Navbar({ onBookTable }) {
     const navigate = useNavigate();
     const location = useLocation();
+    const{info} = useToast();
+
     const { currentUser, isAuthenticated, logout, openAuthModal } = useAuth();
     const { cartCount } = useCart();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -62,6 +65,7 @@ export default function Navbar({ onBookTable }) {
     const handleLogout = () => {
         logout();
         setIsUserMenuOpen(false);
+        info("Logged out successfully.")
         navigate("/");
     };
 

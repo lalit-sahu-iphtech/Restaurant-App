@@ -12,9 +12,11 @@ import { MdOutlinePayments } from "react-icons/md";
 import { useCart } from "../Cart/CartContext";
 import { useAuth } from "../Auth/AuthContext";
 import "./Payment.css";
+import { useToast } from "../../context/ToastContext";
 
 export default function Payment() {
   const navigate = useNavigate();
+  const{success} = useToast();
   const { cartItems, getTotalPrice, clearCart } = useCart();
   const { isAuthenticated, openAuthModal } = useAuth();
 
@@ -156,7 +158,7 @@ export default function Payment() {
 
     // Clear cart after 2.5 seconds
     clearCart();
-
+    success("Payment successful! Your order is confirmed.")
     navigate("/thank-you", {state : {order}});
   }
   // ====================

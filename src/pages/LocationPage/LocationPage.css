@@ -7,7 +7,7 @@
 .location {
     width: 100%;
     background-color: #ffffff;
-    padding-bottom: 80px;
+    /* padding-bottom: 80px; */
 }
 
 
@@ -22,6 +22,7 @@
     object-fit: cover;
     object-position: center;
     display: block;
+   
 }
 
 
@@ -37,9 +38,9 @@
 
 
 .location-grid {
-    max-width: 1400px;
+    max-width: 1440px;
     margin: 0 auto;
-    padding: 0 40px 40px;
+    padding: 0 40px 110px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
@@ -49,7 +50,7 @@
 
 .location-content {
     background: #ffffff;
-    border-radius: 12px;
+    border-radius: 8px;
     overflow: hidden;
     box-shadow: 0px 2px 12px rgba(23, 26, 31, 0.08);
     display: flex;
@@ -173,6 +174,7 @@
 .btn-outline-location2:active {
     transform: scale(0.96);
 }
+
 
 
 @media (max-width: 1200px) {

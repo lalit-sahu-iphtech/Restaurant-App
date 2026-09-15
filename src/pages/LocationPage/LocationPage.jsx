@@ -10,6 +10,7 @@ import card6 from "../../assets/img/card6.jpg"
 
 import "./LocationPage.css"
 import GalleryPage from "../HomePage/GalleryPage";
+import { useNavigate } from "react-router-dom";
 
 const locations = [
     {
@@ -51,6 +52,25 @@ const locations = [
 ]
 
 export default function LocationPage() {
+
+    const navigate = useNavigate();
+
+    // const handleOrderType = (type)=>{
+    //     navigate("/store-location", {
+    //         state : {orderType : type} // delivery or pickup
+    //     })
+    // }
+
+    const handleCardSelect = (index, type = "delivery")=>{
+        navigate("/store-location", {
+            state : {
+                orderType : type,
+                selectedIndex : index,
+            }
+        })
+    }
+
+  
     return (
         <section className="location">
             <div className="location-container">
@@ -62,7 +82,7 @@ export default function LocationPage() {
             {/* Location and Hour section */}
             <div className="location-grid">
                 {locations.map((loc, index) => (
-                    <div className="location-content" key={index}>
+                    <div className="location-content" key={index} onClick={()=>handleCardSelect(index)}>
                         <div className="location-img-wrap">
                             <img src={loc.img} alt={loc.address} />
                         </div>
@@ -81,12 +101,24 @@ export default function LocationPage() {
                         </div>
 
                         <div className="location-btns">
-                            <button className="btn-outline-location">Delivery</button>
-                            <button className="btn-outline-location2">Pickup</button>
+                            <button className="btn-outline-location"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                handleCardSelect(index, "delivery");
+                            } }
+                            >Delivery</button>
+                            <button className="btn-outline-location2"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                handleCardSelect(index, "pickup");
+                            } }
+                            >Pickup</button>
                         </div>
                     </div>
                 ))}
             </div>
+
+            
 
             <GalleryPage/>
         </section>

@@ -25,9 +25,11 @@ import { CiClock2 } from "react-icons/ci";
 
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useToast } from "../../context/ToastContext";
 
 export default function CheckoutMenu() {
   const navigate = useNavigate();
+  const{success, warning} = useToast();
   const { addToCart, removeFromCart, isInCart } = useCart();
   const { isAuthenticated, openAuthModal, currentUser } = useAuth();   
   const [addedItems, setAddedItems] = useState({});
@@ -51,17 +53,24 @@ export default function CheckoutMenu() {
         "selectedLocation",
         JSON.stringify(routerLocation.state.location)
       );
+      if(routerLocation.state?.orderType){
+        setOrderMode(routerLocation.state.orderType);
+      }
       setIsLocationChecked(true);
       return;
     }
 
     // Priority 2: localStorage
     const stored = localStorage.getItem("selectedLocation");
+    const storedMode = localStorage.getItem("orderMode");
     if (stored) {
       try {
         const parsed = JSON.parse(stored);
         setSelectedLocation(parsed);
         setIsLocationChecked(true);
+        if(storedMode){
+          setOrderMode(storedMode);
+        }
         return;
       } catch (err) {
         console.error("Error parsing stored location:", err);
@@ -77,6 +86,11 @@ export default function CheckoutMenu() {
       },
     });
   }, [routerLocation.state, navigate]);
+
+  // order mode change hone pe localstorage me save karo
+  useEffect(()=>{
+    localStorage.setItem("orderMode", orderMode);
+  }, [orderMode]);
 
   //  Jab user login ho jaye aur pending item ho, toh auto-add karo
   useEffect(() => {
@@ -179,6 +193,7 @@ export default function CheckoutMenu() {
   const handleAddToCart = (item) => {
     // Agar logged in nahi hai
     if (!isAuthenticated()) {
+      warning("Please login to add items to cart.");
       // Pending item save karo
       setPendingItem({
         id: item.id,
@@ -214,6 +229,7 @@ export default function CheckoutMenu() {
       img: item.img,
       description:item.description,
     });
+    success(`${item.name} added to cart`)
 
     // Show feedback animation
     setAddedItems((prev) => ({

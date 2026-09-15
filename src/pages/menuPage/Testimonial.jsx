@@ -11,6 +11,7 @@ import locationBowl2 from "../../assets/img/location-bowl2.jpg";
 import { FaChevronRight } from "react-icons/fa";
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const testimonials = [
     {
@@ -36,11 +37,15 @@ const testimonials = [
 ];
 
 export default function Tesimonial(){
+    const navigate = useNavigate();
     const[activeIdx, setActiveIdx] = useState(0);
     const current = testimonials[activeIdx];
 
     const nextTestimonial = () =>{
         setActiveIdx((prev) => (prev + 1) % testimonials.length);
+    }
+    const handleStoreLocation = ()=>{
+         navigate("/store-location")
     }
 
     return(
@@ -82,7 +87,7 @@ export default function Tesimonial(){
                             Serving fresh fish daily at Boston Harbor Islands, Boylston St,
                             Congress St, Kendall Square, Cambridge St, Haviland St.
                         </p>
-                        <button>Locations &amp; Hours</button>
+                        <button onClickCapture={handleStoreLocation}>Locations &amp; Hours</button>
                     </div>
 
                     <div className="locations-images">

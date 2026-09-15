@@ -31,6 +31,8 @@ export default function OrderReview() {
   const[isEditOpen, setIsEditOpen] = useState(false);
   const[editingItem, setEditingItem] = useState(null);
 
+ 
+
   // Recommended items (hardcoded)
   const recommendedItems = [
     {
@@ -66,6 +68,8 @@ export default function OrderReview() {
       price: 15,
     },
   ];
+
+ 
 
   // Redirect if cart is empty
   useEffect(() => {
@@ -173,6 +177,7 @@ export default function OrderReview() {
       openAuthModal("signin", "/payment");
       return;
     }
+    
     navigate("/payment");
   };
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../Auth/AuthContext";
 import signInImg from "../../assets/img/logInImg.jpg";
 import "./signUp.css";
+import { useToast } from "../../context/ToastContext";
 
 export default function SignUp() {
     const { login, redirectAfterAuth, closeAuthModal, switchAuthMode } = useAuth();
@@ -11,6 +12,7 @@ export default function SignUp() {
         email: "",
         password: "",
     });
+    const{success, error} = useToast();
     const [errors, setErrors] = useState({});
     const [users, setUsers] = useState([]);
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -40,6 +42,7 @@ export default function SignUp() {
             (user) => user.email.toLowerCase() === formData.email.toLowerCase()
         );
         if (existingUser) {
+            error("This email is already registerd")
             newErrors.email = "This email is already registered";
         }
 
@@ -83,7 +86,8 @@ export default function SignUp() {
 
             login(newUser);
             setIsSubmitted(true);
-
+            
+            success("Account created successfully!")
             //  Close modal after success
             setTimeout(() => {
                 closeAuthModal();

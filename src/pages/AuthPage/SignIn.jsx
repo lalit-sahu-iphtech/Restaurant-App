@@ -2,14 +2,18 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../Auth/AuthContext";
 import signInImg from "../../assets/img/logInImg.jpg";
 import "./signIn.css";
+import { useToast } from "../../context/ToastContext";
 
 export default function SignIn() {
-    const { login, isAuthenticated, redirectAfterAuth, closeAuthModal, switchAuthMode } = useAuth();
+    const { login, isAuthenticated, redirectAfterAuth, closeAuthModal, switchAuthMode ,} = useAuth();
 
     const [formData, setFormData] = useState({
         email: "",
         password: "",
     });
+
+    const{success, error} = useToast();
+
     const [errors, setErrors] = useState({});
     const [users, setUsers] = useState([]);
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -60,11 +64,15 @@ export default function SignIn() {
 
             if (existingUser) {
                 login(existingUser);
+                success("Login successful! Welcome back")
                 setIsSubmitted(true);
 
-                // 👇 Close modal after success
+                //  Close modal after success
                 setTimeout(() => {
                     closeAuthModal();
+                    if(redirectAfterAuth && redirectAfterAuth !== "/"){
+                        window.location.href = redirectAfterAuth;
+                    }
                     setFormData({ email: "", password: "" });
                     setIsSubmitted(false);
                 }, 800);
@@ -74,8 +82,10 @@ export default function SignIn() {
                 );
 
                 if (emailExists) {
+                    error("Incorrect password. Please try again.")
                     setLoginError("Incorrect password. Please try again.");
                 } else {
+                    error("No account found. Please sign up first")
                     setLoginError("No account found. Please sign up first.");
                 }
             }

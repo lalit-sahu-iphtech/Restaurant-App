@@ -2,14 +2,19 @@ import { FaSearch, FaMapMarkerAlt } from "react-icons/fa";
 import StoreLocationCard from "./StoreLocationCard";
 import { locations } from "./location";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";   
+import { useLocation, useNavigate } from "react-router-dom";   
 import "./StoreLocationPage.css";
 
 export default function StoreLocation() {
     const navigate = useNavigate();   
-    const [activeTab, setActiveTab] = useState("delivery");
+    const location = useLocation();
+
+    const initialOrderType = location.state?.orderType || "delivery";
+    const initialSelectedIndex = location.state?.selectedIndex ?? 0;
+
+    const [activeTab, setActiveTab] = useState(initialOrderType);
     const [searchQuery, setSearchQuery] = useState("");
-    const [selectedId, setSelectedId] = useState(1);
+    const [selectedId, setSelectedId] = useState(locations[initialSelectedIndex]?.id || 1);
 
     const filteredLocations = locations.filter((loc) => {
         const matchesSearch =
@@ -24,9 +29,10 @@ export default function StoreLocation() {
         if (selected) {
             
             localStorage.setItem("selectedLocation", JSON.stringify(selected));
+            localStorage.setItem("orderMode", activeTab);
             
            
-            navigate("/order", { state: { location: selected } });
+            navigate("/order", { state: { location: selected, orderType : activeTab } });
         }
     };
 

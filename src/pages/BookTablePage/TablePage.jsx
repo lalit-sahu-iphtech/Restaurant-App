@@ -1,3 +1,4 @@
+import { createPortal } from "react-dom";
 import { FaTimes } from "react-icons/fa";
 import tableImg from "../../assets/img/gallery2.jpg";
 import { useEffect, useState } from "react";
@@ -14,7 +15,7 @@ export default function TablePage({ isOpen, onClose }) {
     date: "",
     time: "",
   });
-const{success, error, warning} = useToast();
+  const { success, error, warning } = useToast();
   const [errors, setErrors] = useState({});
 
   const guestsOptions = [
@@ -67,7 +68,7 @@ const{success, error, warning} = useToast();
       //modal close - body scroll enable
       document.body.style.overflow = "unset";
     }
-    // component unmount hone per bhi reset
+    // component unmount hone par bhi reset
     return () => {
       document.body.style.overflow = "unset";
     };
@@ -128,8 +129,7 @@ const{success, error, warning} = useToast();
         localStorage.getItem("reservations") || "[]"
       );
 
-      //check duplicate booking
-
+      // check duplicate booking
       const duplicate = reservations.find(
         (r) =>
           r.userEmail === currentUser?.email &&
@@ -165,7 +165,7 @@ const{success, error, warning} = useToast();
         "reservations",
         JSON.stringify([...reservations, newReservation])
       );
-      alert(" Table booked successfully!");
+      success("Table booked successfully!");
 
       setFormData({
         name: "",
@@ -181,7 +181,11 @@ const{success, error, warning} = useToast();
 
   if (!isOpen) return null;
 
-  return (
+  // React Portal: modal ko document.body ke seedha andar mount karta hai,
+  // taaki kisi bhi parent (navbar/wrapper) ke transform/filter se
+  // position:fixed "trap" na ho aur modal hamesha poori viewport ke
+  // relative correctly center ho.
+  return createPortal(
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-container" onClick={(e) => e.stopPropagation()}>
         <button className="modal-close" onClick={onClose}>
@@ -192,8 +196,8 @@ const{success, error, warning} = useToast();
           <h2 className="modal-title">Reservation</h2>
           <p className="modal-desc">
             We provide a convenient online reservation system. Simply select
-            your desired date, time, and party size, and we will make sure that
-            your table is ready upon your arrival.
+            your desired date, time, and party size, and we will make sure
+            that your table is ready upon your arrival.
           </p>
 
           {!isAuthenticated() && (
@@ -237,7 +241,9 @@ const{success, error, warning} = useToast();
                 className={errors.name ? "error" : ""}
                 disabled={!isAuthenticated()}
               />
-              {errors.name && <span className="error-text">{errors.name}</span>}
+              {errors.name && (
+                <span className="error-text">{errors.name}</span>
+              )}
             </div>
 
             {/* Guests & Restaurant */}
@@ -344,6 +350,7 @@ const{success, error, warning} = useToast();
           <img src={tableImg} alt="reservation" />
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   FaCcVisa,
@@ -18,10 +18,11 @@ export default function Payment() {
   const navigate = useNavigate();
   const{success} = useToast();
   const { cartItems, getTotalPrice, clearCart } = useCart();
-  const { isAuthenticated, openAuthModal } = useAuth();
+  const { isAuthenticated, openAuthModal, currentUser } = useAuth();
 
   // Payment method state
   const [paymentMethod, setPaymentMethod] = useState("card");
+ 
 
   // Card form state
   const [cardData, setCardData] = useState({
@@ -139,19 +140,24 @@ export default function Payment() {
 
     if (!validatePayment()) return;
 
-    // ✅ Success — Save order to localStorage
+    // Success — Save order to localStorage
     const order = {
       id: `ORD-${Date.now()}`,
       items: cartItems,
-      total,
-      paymentMethod,
-      status: "Confirmed",
-      userEmail: JSON.parse(localStorage.getItem("currentUser"))?.email,
+      subtotal: subtotal,
+      shipping: shipping,
+      fee: fee,
+      total: total,
+      paymentMethod: paymentMethod,
+      orderMode: localStorage.getItem("orderMode") || "delivery",          
+      status: "Confirmed",               
+      userEmail: currentUser?.email,     
+      userName: currentUser?.name,       
       createdAt: new Date().toISOString(),
-    };
-
-    const orders = JSON.parse(localStorage.getItem("orders") || "[]");
-    localStorage.setItem("orders", JSON.stringify([...orders, order]));
+  };
+  
+  const orders = JSON.parse(localStorage.getItem("orders") || "[]");
+  localStorage.setItem("orders", JSON.stringify([...orders, order]));
 
     // Show success
     setIsSuccess(true);
@@ -161,9 +167,8 @@ export default function Payment() {
     success("Payment successful! Your order is confirmed.")
     navigate("/thank-you", {state : {order}});
   }
-  // ====================
   // SUCCESS SCREEN
-  // ====================
+
   if (isSuccess) {
     return (
       <section className="payment-page">

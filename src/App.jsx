@@ -7,7 +7,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import StoryPage from "./pages/storyPage/StoryPage";
 import LocationPage from "./pages/LocationPage/LocationPage";
 import GiftPage from "./pages/GiftPage/GiftPage";
-import Privacy from "./pages/Privacypage/privacy";
+import Privacy from "./pages/Privacypage/Privacy";
 import Terms from "./pages/TermsPage/Terms";
 import Sitemap from "./pages/SitemapPage/Sitemap";
 // import SignUp from './pages/AuthPage/SignUp'

@@ -14,19 +14,97 @@ import gift12 from "../../assets/giftImg/gift12.jpg";
 import { BsGift } from "react-icons/bs";
 import { MdOutlineCurrencyExchange } from "react-icons/md";
 
-
 import "./GiftPage.css";
 
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function GiftPage() {
+    const [formData, setFormData] = useState({
+        senderName: "",
+        senderEmail: "",
+        senderMessage: "",
+
+        recipientName: "",
+        recipientEmail: "",
+        recipientMessage: "",
+    });
+
+    const [sendToSelf, setSendToSelf] = useState(true);
+    const [errors, setErrors] = useState({});
 
     const navigate = useNavigate();
 
+    // ==================== VALIDATION ====================
+    const validateForm = () => {
+        const newError = {};
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    const handleCheckout = () =>{
-        navigate("/store-location");
-    }
+        // Validate sender OR recipient based on checkbox
+        if (sendToSelf) {
+            // Sender validation
+            if (!formData.senderName.trim()) {
+                newError.senderName = "Name is required";
+            } else if (formData.senderName.trim().length < 2) {
+                newError.senderName = "Name must be at least 2 characters";
+            }
+
+            if (!formData.senderEmail.trim()) {
+                newError.senderEmail = "Email is required";
+            } else if (!emailRegex.test(formData.senderEmail)) {
+                newError.senderEmail = "Please enter a valid email";
+            }
+        } else {
+            // Recipient validation
+            if (!formData.recipientName.trim()) {
+                newError.recipientName = "Recipient name is required";
+            } else if (formData.recipientName.trim().length < 2) {
+                newError.recipientName = "Name must be at least 2 characters";
+            }
+
+            if (!formData.recipientEmail.trim()) {
+                newError.recipientEmail = "Recipient email is required";
+            } else if (!emailRegex.test(formData.recipientEmail)) {
+                newError.recipientEmail = "Please enter a valid email";
+            }
+        }
+
+        setErrors(newError);
+        return Object.keys(newError).length === 0;
+    };
+
+    // ==================== HANDLERS ====================
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+
+        if (errors[name]) {
+            setErrors((prev) => ({ ...prev, [name]: "" }));
+        }
+    };
+
+    const handleCheckboxChange = (e) => {
+        setSendToSelf(e.target.checked);
+        setErrors({});
+    };
+
+    const handleCheckout = () => {
+        if (validateForm()) {
+            const giftData = {
+                sendToSelf,
+                ...formData,
+                createdAt: new Date().toISOString(),
+            };
+
+            localStorage.setItem("giftCard", JSON.stringify(giftData));
+            navigate("/store-location");
+        }
+    };
+
     return (
         <section className="gift-card">
             <div className="gift-card-container">
@@ -37,12 +115,13 @@ export default function GiftPage() {
                         Get a voucher for yourself or gift one to a friend
                     </p>
 
+                    {/* Gift Type */}
                     <div className="gift-type">
                         <h4>What kind of gift is it?</h4>
                         <div className="gift-type-options">
                             <div className="gift-option">
                                 <div className="gift-option-icon">
-                                <BsGift />
+                                    <BsGift />
                                 </div>
                                 <div className="gift-option-text">
                                     <span>For one individual</span>
@@ -51,17 +130,20 @@ export default function GiftPage() {
                             </div>
                             <div className="gift-option">
                                 <div className="gift-option-icon">
-                                <MdOutlineCurrencyExchange />
-
+                                    <MdOutlineCurrencyExchange />
                                 </div>
                                 <div className="gift-option-text">
                                     <span>Group gift card</span>
-                                    <small>Pool money from multiple contributors for one recipient</small>
+                                    <small>
+                                        Pool money from multiple contributors for one
+                                        recipient
+                                    </small>
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                    {/* Gift Amount */}
                     <div className="gift-amount">
                         <h4>eGift card amount</h4>
                         <div className="amount-options">
@@ -73,28 +155,109 @@ export default function GiftPage() {
                         </div>
                     </div>
 
+                    {/* Promo Code */}
                     <div className="promo-code">
                         <h4>Add Promo Code</h4>
-                        {/* <input type="text" placeholder="Enter promo code" /> */}
                     </div>
 
-                    <div className="your-details">
-                        <h4>Your details</h4>
-                        <input type="text" placeholder="Name" />
-                        <input type="email" placeholder="Your Email" />
-                        <textarea placeholder="Your Message (optional)"></textarea>
-                    </div>
+                    {/* ==================== DETAILS SECTION ==================== */}
+                    {sendToSelf ? (
+                        <div className="your-details">
+                            <h4>Your details</h4>
 
+                            <input
+                                type="text"
+                                name="senderName"
+                                placeholder="Name"
+                                value={formData.senderName}
+                                onChange={handleChange}
+                                className={errors.senderName ? "error" : ""}
+                            />
+                            {errors.senderName && (
+                                <span className="error-text">
+                                    {errors.senderName}
+                                </span>
+                            )}
+
+                            <input
+                                type="email"
+                                name="senderEmail"
+                                placeholder="Your Email"
+                                value={formData.senderEmail}
+                                onChange={handleChange}
+                                className={errors.senderEmail ? "error" : ""}
+                            />
+                            {errors.senderEmail && (
+                                <span className="error-text">
+                                    {errors.senderEmail}
+                                </span>
+                            )}
+
+                            <textarea
+                                name="senderMessage"
+                                placeholder="Your Message (optional)"
+                                value={formData.senderMessage}
+                                onChange={handleChange}
+                            ></textarea>
+                        </div>
+                    ) : (
+                        <div className="your-details">
+                            <h4>Recipient details</h4>
+
+                            <input
+                                type="text"
+                                name="recipientName"
+                                placeholder="Recipient Name"
+                                value={formData.recipientName}
+                                onChange={handleChange}
+                                className={errors.recipientName ? "error" : ""}
+                            />
+                            {errors.recipientName && (
+                                <span className="error-text">
+                                    {errors.recipientName}
+                                </span>
+                            )}
+
+                            <input
+                                type="email"
+                                name="recipientEmail"
+                                placeholder="Recipient Email"
+                                value={formData.recipientEmail}
+                                onChange={handleChange}
+                                className={errors.recipientEmail ? "error" : ""}
+                            />
+                            {errors.recipientEmail && (
+                                <span className="error-text">
+                                    {errors.recipientEmail}
+                                </span>
+                            )}
+
+                            <textarea
+                                name="recipientMessage"
+                                placeholder="Gift Message (optional)"
+                                value={formData.recipientMessage}
+                                onChange={handleChange}
+                            ></textarea>
+                        </div>
+                    )}
+
+                    {/* ==================== DELIVERY DETAILS ==================== */}
                     <div className="delivery-details">
                         <h4>Delivery details</h4>
                         <label className="send-to-self">
-                        <span>Send this card to myself</span>
-                        <input type="checkbox" defaultChecked />
-                           
+                            <span>Send this card to myself</span>
+                            <input
+                                type="checkbox"
+                                checked={sendToSelf}
+                                onChange={handleCheckboxChange}
+                            />
                         </label>
                     </div>
 
-                    <button className="checkout-btn" onClick={handleCheckout}>Checkout</button>
+                    {/* Checkout Button */}
+                    <button className="checkout-btn" onClick={handleCheckout}>
+                        Checkout
+                    </button>
                 </div>
 
                 {/* Right Column - Gallery */}

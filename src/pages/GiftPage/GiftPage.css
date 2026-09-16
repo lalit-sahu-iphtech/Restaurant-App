@@ -163,14 +163,12 @@
   background: #FCDD80FF; 
 
 }
-
+/* ===== PROMO CODE ===== */
 .promo-code {
     margin-bottom: 35px;
 }
-.promo-code h4{
-    color: #379AE6FF;;
-}
-.promo-code h4.promo-toggle {
+
+.promo-toggle {
     font-size: 15px;
     font-weight: 500;
     color: #2563eb;
@@ -180,31 +178,151 @@
     transition: color 0.2s ease;
 }
 
-.promo-code h4.promo-toggle:hover {
+.promo-toggle:hover {
     color: #1d4ed8;
     text-decoration: underline;
 }
 
-.promo-code input {
-    width: 100%;
-    padding: 14px 18px;
-    border: 1.5px solid #e8e8e8;
-    border-radius: 10px;
-    font-size: 15px;
-    color: #171A1F;
-    margin-top: 12px;
-    transition: all 0.3s ease;
-    outline: none;
+.promo-input-wrap {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+    animation: slideDown 0.25s ease;
 }
 
-.promo-code input:focus {
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.promo-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1.5px solid #e8e8e8;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #171A1F;
+    outline: none;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.promo-input::placeholder {
+    color: #b0b0b0;
+    text-transform: none;
+}
+
+.promo-input:focus {
     border-color: #F96540;
     box-shadow: 0 0 0 3px rgba(249, 101, 64, 0.1);
 }
 
-.promo-code input::placeholder {
-    color: #b0b0b0;
+.promo-apply-btn {
+    padding: 12px 22px;
+    background: #F96540;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    white-space: nowrap;
 }
+
+.promo-apply-btn:hover {
+    background: #e04f2a;
+    transform: translateY(-1px);
+}
+
+.promo-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #FCDD80;
+    color: #765903;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+.promo-chip-text {
+    letter-spacing: 0.3px;
+}
+
+.promo-chip-remove {
+    background: transparent;
+    border: none;
+    color: #765903;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s ease;
+}
+
+.promo-chip-remove:hover {
+    color: #dc3545;
+}
+
+.promo-error {
+    font-size: 12px;
+    color: #dc3545;
+    margin-top: 8px;
+    padding-left: 2px;
+}
+/* ===== GIFT SUMMARY (Step 5) ===== */
+.gift-summary {
+    background: #faf8f5;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    margin-top: 8px;
+}
+
+.gift-summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #6b6b6b;
+    padding: 4px 0;
+}
+
+.gift-summary-row span:last-child {
+    color: #171A1F;
+    font-weight: 600;
+}
+
+.gift-discount span:last-child {
+    color: #7AB55C;
+}
+
+.gift-total {
+    border-top: 1px solid #e5e3e3;
+    padding-top: 10px;
+    margin-top: 6px;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.gift-total span:last-child {
+    color: #F96540;
+    font-size: 17px;
+}
+
 
 .your-details {
     margin-bottom: 35px;

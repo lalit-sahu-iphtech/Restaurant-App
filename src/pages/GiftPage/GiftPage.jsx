@@ -31,6 +31,14 @@ export default function GiftPage() {
     });
 
     const [sendToSelf, setSendToSelf] = useState(true);
+
+    const[isPromoOpen, setIsPromoOpen] = useState(false);
+    const[promoInput, setPromoInput] = useState("");
+    const[appliedPromo, setAppliedPromo] = useState("");
+    const[promoError, setPromoError] = useState("");
+
+    const[giftAmount, setGiftAmount] = useState(25);
+
     const [errors, setErrors] = useState({});
 
     const navigate = useNavigate();
@@ -105,6 +113,48 @@ export default function GiftPage() {
         }
     };
 
+    const VALID_PROMOS = {
+        GIFT10 : {discount : 10, type : "percent"},
+        FREESHIP : {discount : 0, type : "shipping"},
+        WELCOME15 : {discount:15, type: "percent"},
+    }
+    const handleApplyPromo = () =>{
+        const code = promoInput.trim().toUpperCase();
+
+        if(!code){
+            setPromoError("Please enter a promo code");
+            return;
+        }
+        if(VALID_PROMOS[code]){
+            setAppliedPromo(code);
+            setPromoInput("");
+            setPromoError("");
+            setIsPromoOpen(false);
+        }else{
+            setPromoError("Invalid promo code");
+        }
+    }
+    const handleRemovePromo = () =>{
+        setAppliedPromo("");
+        setPromoError("");
+        setPromoInput("");
+    }
+    const handlePromoToggle = () =>{
+        setIsPromoOpen(true);
+        setPromoError("");
+    }
+
+    const getDiscount = () =>{
+        if(!appliedPromo) return 0;
+
+        const promo = VALID_PROMOS[appliedPromo];
+        if(promo?.type === "percent"){
+            return (giftAmount * promo.discount)/100
+        }
+        return 0;
+    }
+    const finalAmount = giftAmount - getDiscount();
+
     return (
         <section className="gift-card">
             <div className="gift-card-container">
@@ -147,18 +197,54 @@ export default function GiftPage() {
                     <div className="gift-amount">
                         <h4>eGift card amount</h4>
                         <div className="amount-options">
-                            <button className="amount-btn active">$25.00</button>
-                            <button className="amount-btn">$35.00</button>
-                            <button className="amount-btn">$50.00</button>
-                            <button className="amount-btn">$100.00</button>
-                            <button className="amount-btn custom">Custom</button>
+                           {[25,35,50,100].map((amt) =>(
+                            <button
+                            key={amt}
+                            className={`amount-btn ${giftAmount === amt ? "active" : ""}`}
+                            onClick={() => setGiftAmount(amt)}
+                            >
+
+                                ${amt}.00
+                            </button>
+                           ))}
+                           <button className="amount-btn custom">Custom</button>
                         </div>
                     </div>
 
                     {/* Promo Code */}
-                    <div className="promo-code">
-                        <h4>Add Promo Code</h4>
-                    </div>
+                     <div className="promo-code">
+                        {appliedPromo ? (
+                            <div className="promo-chip">
+                                <span className="promo-chip-text">{appliedPromo}</span>
+                                <button
+                                type="button"
+                                className="promo-chip-remove"
+                                onClick={handleRemovePromo}
+                            >
+                                ×
+                             </button>
+                            </div>
+                        )  : isPromoOpen ? (
+                            <div className="promo-input-wrap">
+                                <input type="text"className="promo-input"placeholder="Enter promo code" 
+                                value={promoInput}
+                                onChange={(e)=>{
+                                    setPromoInput(e.target.value);
+                                    if(promoError) setPromoError("");
+                                }}
+                                autoFocus
+                                />
+
+                                <button type="button"className="promo-apply-btn" onClick={handleApplyPromo}>Apply</button>
+                            </div>
+                        ) : (
+                            <h4 className="promo-toggle"onClick={handlePromoToggle}>Add Promo Code</h4>
+                        )}
+
+                        {promoError && (
+                            <p className="promo-error">{promoError}</p>
+                        )}
+                     </div>
 
                     {/* ==================== DETAILS SECTION ==================== */}
                     {sendToSelf ? (
@@ -252,6 +338,23 @@ export default function GiftPage() {
                                 onChange={handleCheckboxChange}
                             />
                         </label>
+                    </div>
+
+                    <div className="gift-summary">
+                        <div className="gift-summary-row">
+                            <span>Gift Amount</span>
+                            <span>${giftAmount.toFixed(2)}</span>
+                        </div>
+                        {appliedPromo && (
+                            <div className="gift-summary-row gift-discount">
+                                <span>Discount ({appliedPromo})</span>
+                                <span>-${getDiscount().toFixed(2)}</span>
+                            </div>
+                        )}
+                        <div className="gift-summary-row gift-total">
+                            <span>Total</span>
+                            <span>${finalAmount.toFixed(2)}</span>
+                        </div>
                     </div>
 
                     {/* Checkout Button */}

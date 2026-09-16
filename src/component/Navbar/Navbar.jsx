@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import logo from "../../assets/img/logo.svg";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { FaBars, FaTimes, FaShoppingCart, FaUser, FaSignOutAlt } from "react-icons/fa";
+import { FaBars, FaTimes, FaShoppingCart, FaUser, FaSignOutAlt, FaIdCard, FaBox } from "react-icons/fa";
 import { useAuth } from "../../pages/Auth/AuthContext";
 import { useCart } from "../../pages/Cart/CartContext";
 import "./Navbar.css";
@@ -16,6 +16,8 @@ const MINIMAL_NAVBAR_ROUTES = [
     "/payment",
     "/thank-you",
     "/menu/see-all",
+    "profile",
+    "/orders",
 ];
 
 export default function Navbar({ onBookTable }) {
@@ -98,9 +100,29 @@ export default function Navbar({ onBookTable }) {
                             </div>
                         </div>
 
-                        <div className="dropdown-divider"></div>
+                 <div className="dropdown-divider"></div>
+                        <button
+                        className="dropdown-item"
+                        onClick={() => {
+                            navigate("/profile");
+                            setIsUserMenuOpen(false);
+                        }}
+                        ><FaIdCard size={14}/> <span>View Profile</span></button>
+                    
+                    <button
+                        className="dropdown-item"
+                        onClick={() => {
+                            navigate("/orders");
+                            setIsUserMenuOpen(false);
+                        }}
+                    >
+                        <FaBox size={14} />
+                        <span>My Orders</span>
+                    </button>
 
-                        <button className="dropdown-logout" onClick={handleLogout}>
+
+
+                <button className="dropdown-logout" onClick={handleLogout}>
                             <FaSignOutAlt size={14} />
                             <span>Logout</span>
                         </button>
@@ -110,9 +132,9 @@ export default function Navbar({ onBookTable }) {
         );
     };
 
-    // ============================================
+   
     // MINIMAL NAVBAR
-    // ============================================
+   
     if (isMinimalNavbar) {
         return (
             <section className="navbar minimal-navbar">
@@ -123,8 +145,9 @@ export default function Navbar({ onBookTable }) {
                             <h1>POKE NOW</h1>
                         </Link>
                     </div>
-
-                    <div className="nav-right minimal-right">
+    
+             
+                    <div className="minimal-right">
                         {isAuthenticated() ? (
                             <UserDropdown />
                         ) : (
@@ -144,7 +167,7 @@ export default function Navbar({ onBookTable }) {
                                 </button>
                             </div>
                         )}
-
+    
                         <div className="cart-pill" onClick={handleCartClick}>
                             <FaShoppingCart size={16} />
                             <span className="cart-count">{cartCount}</span>
@@ -155,9 +178,7 @@ export default function Navbar({ onBookTable }) {
         );
     }
 
-    // ============================================
     // FULL NAVBAR
-    // ============================================
     return (
         <section className={`navbar ${isMenuOpen ? "menu-open" : ""}`}>
             <div className="nav-container">

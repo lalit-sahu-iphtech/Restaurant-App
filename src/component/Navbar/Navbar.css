@@ -305,6 +305,28 @@
     background: #e04f2a;
     transform: scale(1.05);
 }
+.dropdown-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    color: #171A1F;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+}
+
+.dropdown-item:hover {
+    background: #FFF1EC;
+    color: #F96540;
+}
 
 .user-dropdown {
     position: absolute;
@@ -492,6 +514,10 @@
 
     .nav-right {
         display: none;
+    }
+    .nav-right.minimal-right {
+        display: flex !important;
+        gap: 16px;
     }
 
     .hamburger {

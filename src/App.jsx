@@ -22,6 +22,8 @@ import ThankYou from "./pages/ThankYou/ThankYou";
 import SeeAll from "./pages/SeeAll/SeeAll";
 import ScrollToTop from "./component/ScrollToTop/ScrollToTop";
 import ProtectedRoute from "./component/ProtectedRoute/ProtectedRoute";
+import Profile from "./pages/Profile/Profile";
+import OrderHistory from "./pages/OrderHistory/OrderHistory";
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -78,6 +80,21 @@ function App() {
           }
         />
 
+        <Route path="/profile"element={<ProtectedRoute>
+          <Profile/>
+        </ProtectedRoute>}
+        />
+        <Route
+         path="/orders"
+        element={
+        <ProtectedRoute>
+            <OrderHistory />
+        </ProtectedRoute>
+    }
+/>
+
+
+
         <Route
           path="/menu/see-all"
           element={
@@ -86,6 +103,7 @@ function App() {
           
           }
         />
+
       </Routes>
 
       <TablePage isOpen={isModalOpen} onClose={closeModal} />

@@ -1,3 +1,5 @@
+/* ========== GIFT CARD PAGE ================== */
+
 .gift-card {
     padding: 80px 0px 0px 60px;
     background-color: #fff;
@@ -12,7 +14,8 @@
     align-items: start;
 }
 
-/* Left Column - Form */
+/* ========== LEFT COLUMN ===================== */
+
 .gift-card-form {
     padding: 0;
     max-width: 620px;
@@ -21,7 +24,7 @@
 .gift-card-form h2 {
     font-size: 48px;
     font-weight: 500;
-    color: #171A1FFF;
+    color: #171A1F;
     margin-bottom: 10px;
     line-height: 68px;
 }
@@ -33,6 +36,8 @@
     line-height: 26px;
     font-weight: 400;
 }
+
+/* ========== GIFT TYPE ======================= */
 
 .gift-type {
     margin-bottom: 35px;
@@ -47,8 +52,8 @@
 }
 
 .gift-type-options {
-    display: flex;
-    
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 12px;
 }
 
@@ -56,12 +61,14 @@
     display: flex;
     align-items: flex-start;
     gap: 14px;
-    padding: 15px 20px;
+    padding: 16px 18px;
     border: 1.5px solid #e8e8e8;
     border-radius: 10px;
     cursor: pointer;
     user-select: none;
     transition: all 0.3s ease;
+    height: 100%;
+    min-height: 90px;
 }
 
 .gift-option:hover {
@@ -95,21 +102,23 @@
 }
 
 .gift-option-text span {
-    font-size: 18px;
-    line-height: 28px;
+    font-size: 16px;
+    line-height: 24px;
     font-weight: 700;
-    color: #171A1FFF;
+    color: #171A1F;
     display: block;
 }
 
 .gift-option-text small {
     font-size: 12px;
-    line-height: 20px;
-    color: #171A1FFF;
+    line-height: 18px;
+    color: #6b6b6b;
     display: block;
-    margin-top: 2px;
+    margin-top: 4px;
     font-weight: 400;
 }
+
+/* ========== GIFT AMOUNT ===================== */
 
 .gift-amount {
     margin-bottom: 35px;
@@ -119,7 +128,7 @@
     font-size: 20px;
     line-height: 30px;
     font-weight: 700;
-    color: #171A1FFF;
+    color: #171A1F;
     margin-bottom: 15px;
 }
 
@@ -133,37 +142,139 @@
     padding: 10px 24px;
     background-color: #fff;
     border: 1.5px solid #e8e8e8;
-    border-radius: 4px;
+    border-radius: 6px;
     font-size: 14px;
     font-weight: 500;
     color: #171A1F;
     cursor: pointer;
     transition: all 0.3s ease;
+    font-family: inherit;
 }
 
 .amount-btn:hover {
-   
-    color: #765903FF; 
-    background: #FCDD80FF
+    color: #765903;
+    background: #FCDD80;
+    border-color: #F0B429;
 }
 
-/* .amount-btn.active {
-    color: #765903FF; 
-  background: #FCDD80FF;
+.amount-btn.active {
+    color: #765903;
+    background: #FCDD80;
     border-color: #F0B429;
-} */
+}
 
 .amount-btn.custom {
-    border-color: transparent;
+    border-color: #e8e8e8;
     background-color: #fef6f4;
+    color: #F96540;
+    font-weight: 600;
 }
 
-.amount-btn.custom:hover {
-    color: #765903FF; 
-  background: #FCDD80FF; 
-
+.amount-btn.custom:hover,
+.amount-btn.custom.active {
+    color: #765903;
+    background: #FCDD80;
+    border-color: #F0B429;
 }
-/* ===== PROMO CODE ===== */
+
+/* ===== CUSTOM AMOUNT ===== */
+.custom-amount-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    animation: slideDown 0.25s ease;
+}
+
+.custom-amount-input-wrap {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.custom-amount-symbol {
+    position: absolute;
+    left: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #171A1F;
+    pointer-events: none;
+}
+
+.custom-amount-input {
+    width: 100%;
+    padding: 11px 14px 11px 30px;
+    border: 1.5px solid #e8e8e8;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    color: #171A1F;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.custom-amount-input:focus {
+    border-color: #F96540;
+    box-shadow: 0 0 0 3px rgba(249, 101, 64, 0.1);
+}
+
+.custom-amount-input::placeholder {
+    color: #b0b0b0;
+}
+
+.custom-amount-apply {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 11px 20px;
+    background: #F96540;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.custom-amount-apply:hover {
+    background: #e04f2a;
+    transform: translateY(-1px);
+}
+
+.custom-amount-cancel {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: #f5f5f5;
+    color: #6b6b6b;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.custom-amount-cancel:hover {
+    background: #fee;
+    color: #dc3545;
+}
+
+.custom-amount-hint {
+    font-size: 12px;
+    color: #dc3545;
+    margin-top: 8px;
+    padding-left: 2px;
+}
+
+/* ========== PROMO CODE ====================== */
+
 .promo-code {
     margin-bottom: 35px;
 }
@@ -185,7 +296,7 @@
 
 .promo-input-wrap {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     margin-top: 8px;
     animation: slideDown 0.25s ease;
 }
@@ -203,7 +314,7 @@
 
 .promo-input {
     flex: 1;
-    padding: 12px 16px;
+    padding: 11px 14px;
     border: 1.5px solid #e8e8e8;
     border-radius: 8px;
     font-size: 14px;
@@ -225,7 +336,7 @@
 }
 
 .promo-apply-btn {
-    padding: 12px 22px;
+    padding: 11px 20px;
     background: #F96540;
     color: #ffffff;
     border: none;
@@ -241,6 +352,26 @@
 .promo-apply-btn:hover {
     background: #e04f2a;
     transform: translateY(-1px);
+}
+
+.promo-cancel-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: #f5f5f5;
+    color: #6b6b6b;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.promo-cancel-btn:hover {
+    background: #fee;
+    color: #dc3545;
 }
 
 .promo-chip {
@@ -264,13 +395,11 @@
     background: transparent;
     border: none;
     color: #765903;
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 1;
     cursor: pointer;
     padding: 0;
     display: flex;
     align-items: center;
+    justify-content: center;
     transition: color 0.2s ease;
 }
 
@@ -284,7 +413,9 @@
     margin-top: 8px;
     padding-left: 2px;
 }
-/* ===== GIFT SUMMARY (Step 5) ===== */
+
+/* ========== GIFT SUMMARY ==================== */
+
 .gift-summary {
     background: #faf8f5;
     border-radius: 10px;
@@ -323,6 +454,7 @@
     font-size: 17px;
 }
 
+/* ========== YOUR DETAILS ==================== */
 
 .your-details {
     margin-bottom: 35px;
@@ -335,49 +467,74 @@
     margin-bottom: 12px;
 }
 
-.your-details input {
-    width: 60%;
-    padding: 14px 18px;
-    border: 1.5px solid #e8e8e8;
-    border-radius: 10px;
-    font-size: 15px;
-    color: #171A1F;
-    margin-bottom: 12px;
-    transition: all 0.3s ease;
-    outline: none;
-}
-
-.your-details input:focus {
-    border-color: #F96540;
-    box-shadow: 0 0 0 3px rgba(249, 101, 64, 0.1);
-}
-
-.your-details input::placeholder {
-    color: #b0b0b0;
-}
-
+.your-details input,
 .your-details textarea {
-    width: 60%;
+    width: 80%;
     padding: 14px 18px;
     border: 1.5px solid #e8e8e8;
-    border-radius: 10px;
+    border-radius: 4px;
     font-size: 15px;
+    font-family: inherit;
     color: #171A1F;
-    resize: vertical;
-    min-height: 80px;
     transition: all 0.3s ease;
     outline: none;
-    font-family: inherit;
+    box-sizing: border-box;
+    display: block;
 }
 
+.your-details input:focus,
 .your-details textarea:focus {
     border-color: #F96540;
     box-shadow: 0 0 0 3px rgba(249, 101, 64, 0.1);
 }
 
+.your-details input::placeholder,
 .your-details textarea::placeholder {
     color: #b0b0b0;
 }
+
+.your-details textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+.your-details input.error,
+.your-details textarea.error {
+    border-color: #dc3545;
+    background: #fff5f5;
+}
+
+.your-details input.error:focus,
+.your-details textarea.error:focus {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+}
+
+/* Error text — clean, no box */
+.error-text {
+    display: block;
+    font-size: 12px;
+    color: #dc3545;
+    margin-top: 6px;
+    margin-bottom: 14px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    font-weight: 500;
+    line-height: 1.4;
+    padding-left: 2px;
+}
+
+/* Gap between fields */
+.your-details input:not(.error) {
+    margin-bottom: 16px;
+}
+
+.your-details textarea {
+    margin-bottom: 8px;
+}
+
+/* ========== DELIVERY DETAILS ================ */
 
 .delivery-details {
     margin-bottom: 35px;
@@ -393,7 +550,7 @@
 .send-to-self {
     display: flex;
     align-items: center;
-     gap: 100px;
+    gap: 100px;
     cursor: pointer;
 }
 
@@ -438,9 +595,12 @@
     transform: translateX(20px);
 }
 
+/* ========== CHECKOUT BUTTON ================= */
+
 .checkout-btn {
-    width: 60%;
-    padding: 16px 16px;
+    width: 100%;
+    max-width: 380px;
+    padding: 16px;
     background: #F96540;
     color: #ffffff;
     border: none;
@@ -450,21 +610,21 @@
     cursor: pointer;
     transition: all 0.3s ease;
     margin-bottom: 20px;
+    font-family: inherit;
 }
 
 .checkout-btn:hover {
     background: #e04f2a;
-    transform: scale(1.01);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(249, 101, 64, 0.3);
 }
 
-/* Right Column - Gallery */
+/* ========== RIGHT COLUMN - GALLERY ========== */
+
 .gift-card-gallery {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 20px;
-    /* width: 125%;
-    min-width: 900px; */
-   
 }
 
 .gallery-col {
@@ -486,7 +646,7 @@
     transform: scale(1.02);
 }
 
-/* ---------- GIFT CARD - RESPONSIVE ---------- */
+/* ========== RESPONSIVE ====================== */
 
 /* Tablet (992px and below) */
 @media (max-width: 992px) {
@@ -499,6 +659,10 @@
         gap: 50px;
     }
 
+    .gift-card-form {
+        max-width: 100%;
+    }
+
     .gift-card-form h2 {
         font-size: 38px;
     }
@@ -506,8 +670,6 @@
     .gift-card-gallery {
         grid-template-columns: 1fr 1fr 1fr;
         gap: 15px;
-        width: 100%;
-        min-width: 0;
     }
 
     .gallery-col {
@@ -518,7 +680,8 @@
         padding: 8px 20px;
         font-size: 13px;
     }
-    .send-to-self{
+
+    .send-to-self {
         gap: 70px;
     }
 }
@@ -550,7 +713,7 @@
     }
 
     .gift-option-text small {
-        font-size: 12px;
+        font-size: 11px;
     }
 
     .amount-options {
@@ -561,7 +724,8 @@
         padding: 8px 16px;
         font-size: 12px;
     }
-    .send-to-self{
+
+    .send-to-self {
         gap: 50px;
     }
 
@@ -592,6 +756,7 @@
 
     .gift-card-form h2 {
         font-size: 26px;
+        line-height: 34px;
     }
 
     .gift-subtitle {
@@ -607,13 +772,16 @@
         font-size: 14px;
     }
 
+    /* Gift Type — Stack */
     .gift-type-options {
+        grid-template-columns: 1fr;
         gap: 10px;
     }
 
     .gift-option {
-        padding: 10px 12px;
-        gap: 10px;
+        min-height: auto;
+        padding: 12px 14px;
+        gap: 12px;
     }
 
     .gift-option-text span {
@@ -635,16 +803,32 @@
 
     .amount-btn {
         padding: 6px 14px;
-        font-size: 11px;
+        font-size: 12px;
     }
 
-    .promo-code input,
+    /* Custom amount — Stack */
+    .custom-amount-wrap {
+        flex-wrap: wrap;
+    }
+
+    .custom-amount-input-wrap {
+        width: 100%;
+        flex: none;
+    }
+
+    .custom-amount-apply {
+        flex: 1;
+        justify-content: center;
+    }
+
+    .promo-input,
     .your-details input,
     .your-details textarea {
         padding: 12px 14px;
         font-size: 14px;
     }
-    .send-to-self{
+
+    .send-to-self {
         gap: 30px;
     }
 
@@ -670,6 +854,16 @@
         font-size: 15px;
         border-radius: 25px;
     }
+
+    .error-text {
+        font-size: 11px;
+        margin-top: 5px;
+        margin-bottom: 12px;
+    }
+
+    .your-details input:not(.error) {
+        margin-bottom: 14px;
+    }
 }
 
 /* Extra Small Mobile (400px and below) */
@@ -687,7 +881,7 @@
     }
 
     .gift-option {
-        padding: 8px 10px;
+        padding: 10px 12px;
     }
 
     .gift-option-text span {
@@ -705,22 +899,47 @@
 
     .amount-btn {
         padding: 5px 12px;
-        font-size: 10px;
+        font-size: 11px;
         border-radius: 20px;
     }
 
-    .promo-code input,
+    .custom-amount-symbol {
+        left: 12px;
+        font-size: 14px;
+    }
+
+    .custom-amount-input {
+        padding: 10px 12px 10px 26px;
+        font-size: 14px;
+    }
+
+    .custom-amount-apply {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+
+    .promo-input,
     .your-details input,
     .your-details textarea {
         padding: 10px 12px;
         font-size: 13px;
     }
+    .your-details input,
+  .your-details textarea {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 13px;
+    border: 1.5px solid #e8e8e8;
+    
+   
+}
 
     .your-details textarea {
-        min-height: 60px;
+        min-height: 70px;
     }
-    .send-to-self{
-        gap: 20px;
+
+    .send-to-self {
+        gap: 166px;
     }
 
     .send-to-self span {
@@ -738,5 +957,11 @@
     .checkout-btn {
         padding: 10px;
         font-size: 14px;
+    }
+
+    .error-text {
+        font-size: 11px;
+        margin-top: 5px;
+        margin-bottom: 12px;
     }
 }

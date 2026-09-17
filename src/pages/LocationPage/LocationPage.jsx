@@ -92,11 +92,11 @@ export default function LocationPage() {
                         <p className="hours">Sunday - 12:00 PM - 9:00PM</p>
 
                         <div className="location-contact">
-                            <FaPhoneAlt size={16} />
+                            <FaPhoneAlt size={14} />
                             <p>{loc.phone}</p>
                         </div>
                         <div className="location-email">
-                            <FaMapMarkerAlt size={16} />
+                            <FaMapMarkerAlt size={14} />
                             <p>{loc.email}</p>
                         </div>
 

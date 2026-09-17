@@ -39,6 +39,8 @@ export default function GiftPage() {
 
     const[giftAmount, setGiftAmount] = useState(25);
 
+    const[giftType, setGiftType] = useState("individual");
+
     const [errors, setErrors] = useState({});
 
     const navigate = useNavigate();
@@ -103,6 +105,11 @@ export default function GiftPage() {
     const handleCheckout = () => {
         if (validateForm()) {
             const giftData = {
+                giftType,
+                giftAmount,
+                appliedPromo,
+                discount:getDiscount(),
+                finalAmount,
                 sendToSelf,
                 ...formData,
                 createdAt: new Date().toISOString(),
@@ -112,6 +119,10 @@ export default function GiftPage() {
             navigate("/store-location");
         }
     };
+
+    const handleGiftTypeChange = (type) =>{
+        setGiftType(type);
+    }
 
     const VALID_PROMOS = {
         GIFT10 : {discount : 10, type : "percent"},
@@ -169,7 +180,9 @@ export default function GiftPage() {
                     <div className="gift-type">
                         <h4>What kind of gift is it?</h4>
                         <div className="gift-type-options">
-                            <div className="gift-option">
+                            <div className={`gift-option ${giftType === "individual" ? "active" : ""}`}
+                            onClick={()=>handleGiftTypeChange("individual")}
+                            >
                                 <div className="gift-option-icon">
                                     <BsGift />
                                 </div>
@@ -178,7 +191,9 @@ export default function GiftPage() {
                                     <small>Send a gift card to one recipient</small>
                                 </div>
                             </div>
-                            <div className="gift-option">
+                            <div className={`gift-option ${giftType === "group" ? "active" : ""}`}
+                            onClick={()=>handleGiftTypeChange("group")}
+                            >
                                 <div className="gift-option-icon">
                                     <MdOutlineCurrencyExchange />
                                 </div>

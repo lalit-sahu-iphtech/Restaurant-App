@@ -108,14 +108,20 @@
 }
 
 .see-all-card-name {
-    font-size: 16px;
+    /* font-size: 16px;
     font-weight: 700;
     color: #171A1F;
-    margin: 0 0 8px 0;
+    margin: 0 0 8px 0; */
+    font-size: 17px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 12px 0 8px;
+    text-align: left;
+    width: 100%;
 }
 
 .see-all-card-desc {
-    font-size: 12px;
+    /* font-size: 12px;
     color: #8a8a8a;
     line-height: 1.5;
     flex-grow: 1;
@@ -124,7 +130,18 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    min-height: 54px;
+    min-height: 54px; */
+    font-size: 13px;
+    color: #8a8a8a;
+    line-height: 1.6;
+    text-align: left;
+    flex-grow: 1;
+    margin-bottom: 15px;
+    width: 100%;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .see-all-card-footer {

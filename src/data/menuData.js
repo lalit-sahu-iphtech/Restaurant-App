@@ -82,10 +82,38 @@ export const bowlItems = [
 ];
 
 export const drinkItems = [
-    { id: 9, name: "Coca Cola", img: CocaCola, description: "Chilled Coca Cola", price: 2, category: "drinks" },
-    { id: 10, name: "Water", img: Water, description: "Mineral water", price: 2, category: "drinks" },
-    { id: 11, name: "Sweet Tea", img: SweetTea, description: "Refreshing sweet tea", price: 2, category: "drinks" },
-    { id: 12, name: "Lemonade", img: Lemonade, description: "Fresh lemonade", price: 2, category: "drinks" },
+    {
+        id: 9,
+        name: "Coca Cola",
+        img: CocaCola,
+        description: "Chilled Coca Cola • Classic Cola Base • Natural Flavors • Carbonated Water • Caramel Color • Ice Cold • Refreshing Fizz",
+        price: 2,
+        category: "drinks",
+    },
+    {
+        id: 10,
+        name: "Water",
+        img: Water,
+        description: "Purified Mineral Water • Spring Source • Balanced pH • Zero Calories • Fresh & Crisp • Natural Minerals",
+        price: 2,
+        category: "drinks",
+    },
+    {
+        id: 11,
+        name: "Sweet Tea",
+        img: SweetTea,
+        description: "Brewed Black Tea • Southern Style • Fresh Lemon • Cane Sugar • Ice Chilled • Refreshing Finish",
+        price: 2,
+        category: "drinks",
+    },
+    {
+        id: 12,
+        name: "Lemonade",
+        img: Lemonade,
+        description: "Fresh Squeezed Lemon • Natural Citrus • Cane Sugar • Sparkling Water • Ice Cold • Tangy Sweet Balance",
+        price: 2,
+        category: "drinks",
+    },
 ];
 
 export const allMenuItems = [...bowlItems, ...drinkItems];

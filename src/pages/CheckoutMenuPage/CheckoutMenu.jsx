@@ -182,12 +182,41 @@ export default function CheckoutMenu() {
     },
   ];
 
-  const drinkItems = [
-    { id: 9, name: "Coca Cola", img: cocaCola, price: 2, category: "drinks" },
-    { id: 10, name: "Water", img: Water, price: 2, category: "drinks" },
-    { id: 11, name: "Sweet Tea", img: sweatTea, price: 2, category: "drinks" },
-    { id: 12, name: "Lemonade", img: Lemonade, price: 2, category: "drinks" },
-  ];
+
+const drinkItems = [
+    {
+        id: 9,
+        name: "Coca Cola",
+        img: cocaCola,
+        description: "Chilled Coca Cola • Classic Cola Base • Natural Flavors • Carbonated Water • Caramel Color • Ice Cold • Refreshing Fizz",
+        price: 2,
+        category: "drinks",
+    },
+    {
+        id: 10,
+        name: "Water",
+        img: Water,
+        description: "Purified Mineral Water • Spring Source • Balanced pH • Zero Calories • Fresh & Crisp • Natural Minerals",
+        price: 2,
+        category: "drinks",
+    },
+    {
+        id: 11,
+        name: "Sweet Tea",
+        img: sweatTea,
+        description: "Brewed Black Tea • Southern Style • Fresh Lemon • Cane Sugar • Ice Chilled • Refreshing Finish",
+        price: 2,
+        category: "drinks",
+    },
+    {
+        id: 12,
+        name: "Lemonade",
+        img: Lemonade,
+        description: "Fresh Squeezed Lemon • Natural Citrus • Cane Sugar • Sparkling Water • Ice Cold • Tangy Sweet Balance",
+        price: 2,
+        category: "drinks",
+    },
+];
 
 
   const handleAddToCart = (item) => {
@@ -351,13 +380,14 @@ export default function CheckoutMenu() {
           <div className="drinks-container">
             <h2 className="drinks-title">Drink</h2>
 
-            <div className="drinks-grid">
+            <div className="menu-grid">
               {drinkItems.map((item) => (
-                <div key={item.id} className="drink-card">
-                  <img src={item.img} alt={item.name} className="drink-card-img" />
-                  <p className="drink-card-name">{item.name}</p>
-                  <div className="drink-card-footer">
-                    <p className="drink-card-price">${item.price}</p>
+                <div key={item.id} className="menu-card">
+                  <img src={item.img} alt={item.name} className="menu-card-img" />
+                  <h3 className="menu-card-title">{item.name}</h3>
+                <p className="menu-card-desc">{item.description}</p>
+                  <div className="menu-card-footer">
+                    <p className="menu-card-price">${item.price}</p>
                     <button
                     className={`drink-card-btn ${isInCart(item.id) ? "in-cart" : ""}`}
                     onClick={() => handleAddToCart(item)}

@@ -389,7 +389,7 @@ const drinkItems = [
                   <div className="menu-card-footer">
                     <p className="menu-card-price">${item.price}</p>
                     <button
-                    className={`drink-card-btn ${isInCart(item.id) ? "in-cart" : ""}`}
+                    className={`menu-card-btn ${isInCart(item.id) ? "in-cart" : ""}`}
                     onClick={() => handleAddToCart(item)}
                   >
                     {isInCart(item.id) ? "Remove from cart" : "Add to cart"}

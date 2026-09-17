@@ -13,6 +13,7 @@ import gift12 from "../../assets/giftImg/gift12.jpg";
 
 import { BsGift } from "react-icons/bs";
 import { MdOutlineCurrencyExchange } from "react-icons/md";
+import { FaTimes, FaCheck } from "react-icons/fa";   // 👈 Add
 
 import "./GiftPage.css";
 
@@ -24,7 +25,6 @@ export default function GiftPage() {
         senderName: "",
         senderEmail: "",
         senderMessage: "",
-
         recipientName: "",
         recipientEmail: "",
         recipientMessage: "",
@@ -32,14 +32,17 @@ export default function GiftPage() {
 
     const [sendToSelf, setSendToSelf] = useState(true);
 
-    const[isPromoOpen, setIsPromoOpen] = useState(false);
-    const[promoInput, setPromoInput] = useState("");
-    const[appliedPromo, setAppliedPromo] = useState("");
-    const[promoError, setPromoError] = useState("");
+    const [isPromoOpen, setIsPromoOpen] = useState(false);
+    const [promoInput, setPromoInput] = useState("");
+    const [appliedPromo, setAppliedPromo] = useState("");
+    const [promoError, setPromoError] = useState("");
 
-    const[giftAmount, setGiftAmount] = useState(25);
+    const [giftAmount, setGiftAmount] = useState(25);
 
-    const[giftType, setGiftType] = useState("individual");
+    const [isCustomAmount, setIsCustomAmount] = useState(false);
+    const [customAmount, setCustomAmount] = useState("");
+
+    const [giftType, setGiftType] = useState("individual");
 
     const [errors, setErrors] = useState({});
 
@@ -50,22 +53,19 @@ export default function GiftPage() {
         const newError = {};
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        // Validate sender OR recipient based on checkbox
         if (sendToSelf) {
-            // Sender validation
             if (!formData.senderName.trim()) {
-                newError.senderName = "Name is required";
+                newError.senderName = "*Name is required";
             } else if (formData.senderName.trim().length < 2) {
                 newError.senderName = "Name must be at least 2 characters";
             }
 
             if (!formData.senderEmail.trim()) {
-                newError.senderEmail = "Email is required";
+                newError.senderEmail = "*Email is required";
             } else if (!emailRegex.test(formData.senderEmail)) {
                 newError.senderEmail = "Please enter a valid email";
             }
         } else {
-            // Recipient validation
             if (!formData.recipientName.trim()) {
                 newError.recipientName = "Recipient name is required";
             } else if (formData.recipientName.trim().length < 2) {
@@ -86,11 +86,7 @@ export default function GiftPage() {
     // ==================== HANDLERS ====================
     const handleChange = (e) => {
         const { name, value } = e.target;
-
-        setFormData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
+        setFormData((prev) => ({ ...prev, [name]: value }));
 
         if (errors[name]) {
             setErrors((prev) => ({ ...prev, [name]: "" }));
@@ -108,7 +104,7 @@ export default function GiftPage() {
                 giftType,
                 giftAmount,
                 appliedPromo,
-                discount:getDiscount(),
+                discount: getDiscount(),
                 finalAmount,
                 sendToSelf,
                 ...formData,
@@ -120,50 +116,83 @@ export default function GiftPage() {
         }
     };
 
-    const handleGiftTypeChange = (type) =>{
-        setGiftType(type);
-    }
+    // ===== CUSTOM AMOUNT HANDLERS =====
+    const handleCustomAmount = () => {
+        setIsCustomAmount(true);
+        setGiftAmount("");
+    };
 
+    const handleCustomAmountChange = (e) => {
+        const value = e.target.value.replace(/\D/g, "").slice(0, 5);
+        setCustomAmount(value);
+        setGiftAmount(value ? Number(value) : "");
+    };
+
+    const applyCustomAmount = () => {
+        if (customAmount && Number(customAmount) >= 10) {
+            setGiftAmount(Number(customAmount));
+            setIsCustomAmount(false);
+        } else {
+            setCustomAmount("");
+        }
+    };
+
+    const cancelCustomAmount = () => {
+        setIsCustomAmount(false);
+        setCustomAmount("");
+        setGiftAmount(25);
+    };
+
+    // ===== GIFT TYPE =====
+    const handleGiftTypeChange = (type) => {
+        setGiftType(type);
+    };
+
+    // ===== PROMO CODE =====
     const VALID_PROMOS = {
-        GIFT10 : {discount : 10, type : "percent"},
-        FREESHIP : {discount : 0, type : "shipping"},
-        WELCOME15 : {discount:15, type: "percent"},
-    }
-    const handleApplyPromo = () =>{
+        GIFT10: { discount: 10, type: "percent" },
+        FREESHIP: { discount: 0, type: "shipping" },
+        WELCOME15: { discount: 15, type: "percent" },
+    };
+
+    const handleApplyPromo = () => {
         const code = promoInput.trim().toUpperCase();
 
-        if(!code){
+        if (!code) {
             setPromoError("Please enter a promo code");
             return;
         }
-        if(VALID_PROMOS[code]){
+
+        if (VALID_PROMOS[code]) {
             setAppliedPromo(code);
             setPromoInput("");
             setPromoError("");
             setIsPromoOpen(false);
-        }else{
+        } else {
             setPromoError("Invalid promo code");
         }
-    }
-    const handleRemovePromo = () =>{
+    };
+
+    const handleRemovePromo = () => {
         setAppliedPromo("");
         setPromoError("");
         setPromoInput("");
-    }
-    const handlePromoToggle = () =>{
+    };
+
+    const handlePromoToggle = () => {
         setIsPromoOpen(true);
         setPromoError("");
-    }
+    };
 
-    const getDiscount = () =>{
-        if(!appliedPromo) return 0;
-
+    const getDiscount = () => {
+        if (!appliedPromo) return 0;
         const promo = VALID_PROMOS[appliedPromo];
-        if(promo?.type === "percent"){
-            return (giftAmount * promo.discount)/100
+        if (promo?.type === "percent") {
+            return (giftAmount * promo.discount) / 100;
         }
         return 0;
-    }
+    };
+
     const finalAmount = giftAmount - getDiscount();
 
     return (
@@ -180,8 +209,11 @@ export default function GiftPage() {
                     <div className="gift-type">
                         <h4>What kind of gift is it?</h4>
                         <div className="gift-type-options">
-                            <div className={`gift-option ${giftType === "individual" ? "active" : ""}`}
-                            onClick={()=>handleGiftTypeChange("individual")}
+                            <div
+                                className={`gift-option ${
+                                    giftType === "individual" ? "active" : ""
+                                }`}
+                                onClick={() => handleGiftTypeChange("individual")}
                             >
                                 <div className="gift-option-icon">
                                     <BsGift />
@@ -191,8 +223,11 @@ export default function GiftPage() {
                                     <small>Send a gift card to one recipient</small>
                                 </div>
                             </div>
-                            <div className={`gift-option ${giftType === "group" ? "active" : ""}`}
-                            onClick={()=>handleGiftTypeChange("group")}
+                            <div
+                                className={`gift-option ${
+                                    giftType === "group" ? "active" : ""
+                                }`}
+                                onClick={() => handleGiftTypeChange("group")}
                             >
                                 <div className="gift-option-icon">
                                     <MdOutlineCurrencyExchange />
@@ -212,56 +247,138 @@ export default function GiftPage() {
                     <div className="gift-amount">
                         <h4>eGift card amount</h4>
                         <div className="amount-options">
-                           {[25,35,50,100].map((amt) =>(
+                            {[25, 35, 50, 100].map((amt) => (
+                                <button
+                                    key={amt}
+                                    className={`amount-btn ${
+                                        !isCustomAmount && giftAmount === amt
+                                            ? "active"
+                                            : ""
+                                    }`}
+                                    onClick={() => {
+                                        setGiftAmount(amt);
+                                        setIsCustomAmount(false);
+                                    }}
+                                >
+                                    ${amt}.00
+                                </button>
+                            ))}
                             <button
-                            key={amt}
-                            className={`amount-btn ${giftAmount === amt ? "active" : ""}`}
-                            onClick={() => setGiftAmount(amt)}
+                                className={`amount-btn custom ${
+                                    isCustomAmount ? "active" : ""
+                                }`}
+                                onClick={handleCustomAmount}
                             >
-
-                                ${amt}.00
+                                Custom
                             </button>
-                           ))}
-                           <button className="amount-btn custom">Custom</button>
                         </div>
+
+                        {isCustomAmount && (
+                            <div className="custom-amount-wrap">
+                                <div className="custom-amount-input-wrap">
+                                    <span className="custom-amount-symbol">$</span>
+                                    <input
+                                        type="text"
+                                        className="custom-amount-input"
+                                        placeholder="Enter amount"
+                                        value={customAmount}
+                                        onChange={handleCustomAmountChange}
+                                        autoFocus
+                                        maxLength={5}
+                                    />
+                                </div>
+                                <button
+                                    type="button"
+                                    className="custom-amount-apply"
+                                    onClick={applyCustomAmount}
+                                >
+                                    <FaCheck size={12} />
+                                    Apply
+                                </button>
+                                <button
+                                    type="button"
+                                    className="custom-amount-cancel"
+                                    onClick={cancelCustomAmount}
+                                    aria-label="Cancel"
+                                >
+                                    <FaTimes size={14} />
+                                </button>
+                            </div>
+                        )}
+
+                        {isCustomAmount &&
+                            customAmount &&
+                            Number(customAmount) < 10 && (
+                                <p className="custom-amount-hint">
+                                    Minimum amount is $10
+                                </p>
+                            )}
                     </div>
 
                     {/* Promo Code */}
-                     <div className="promo-code">
+                    <div className="promo-code">
                         {appliedPromo ? (
                             <div className="promo-chip">
-                                <span className="promo-chip-text">{appliedPromo}</span>
+                                <span className="promo-chip-text">
+                                    {appliedPromo}
+                                </span>
                                 <button
-                                type="button"
-                                className="promo-chip-remove"
-                                onClick={handleRemovePromo}
-                            >
-                                ×
-                             </button>
+                                    type="button"
+                                    className="promo-chip-remove"
+                                    onClick={handleRemovePromo}
+                                    aria-label="Remove promo"
+                                >
+                                    <FaTimes size={11} />
+                                </button>
                             </div>
-                        )  : isPromoOpen ? (
+                        ) : isPromoOpen ? (
                             <div className="promo-input-wrap">
-                                <input type="text"className="promo-input"placeholder="Enter promo code" 
-                                value={promoInput}
-                                onChange={(e)=>{
-                                    setPromoInput(e.target.value);
-                                    if(promoError) setPromoError("");
-                                }}
-                                autoFocus
+                                <input
+                                    type="text"
+                                    className="promo-input"
+                                    placeholder="Enter promo code"
+                                    value={promoInput}
+                                    onChange={(e) => {
+                                        setPromoInput(e.target.value);
+                                        if (promoError) setPromoError("");
+                                    }}
+                                    autoFocus
                                 />
-
-                                <button type="button"className="promo-apply-btn" onClick={handleApplyPromo}>Apply</button>
+                                <button
+                                    type="button"
+                                    className="promo-apply-btn"
+                                    onClick={handleApplyPromo}
+                                >
+                                    Apply
+                                </button>
+                                <button
+                                    type="button"
+                                    className="promo-cancel-btn"
+                                    onClick={() => {
+                                        setIsPromoOpen(false);
+                                        setPromoInput("");
+                                        setPromoError("");
+                                    }}
+                                    aria-label="Cancel"
+                                >
+                                    <FaTimes size={14} />
+                                </button>
                             </div>
                         ) : (
-                            <h4 className="promo-toggle"onClick={handlePromoToggle}>Add Promo Code</h4>
+                            <h4
+                                className="promo-toggle"
+                                onClick={handlePromoToggle}
+                            >
+                                Add Promo Code
+                            </h4>
                         )}
 
                         {promoError && (
                             <p className="promo-error">{promoError}</p>
                         )}
-                     </div>
+                    </div>
 
-                    {/* ==================== DETAILS SECTION ==================== */}
+                    {/* Details Section */}
                     {sendToSelf ? (
                         <div className="your-details">
                             <h4>Your details</h4>
@@ -342,7 +459,7 @@ export default function GiftPage() {
                         </div>
                     )}
 
-                    {/* ==================== DELIVERY DETAILS ==================== */}
+                    {/* Delivery Details */}
                     <div className="delivery-details">
                         <h4>Delivery details</h4>
                         <label className="send-to-self">
@@ -355,10 +472,11 @@ export default function GiftPage() {
                         </label>
                     </div>
 
+                    {/* Summary */}
                     <div className="gift-summary">
                         <div className="gift-summary-row">
                             <span>Gift Amount</span>
-                            <span>${giftAmount.toFixed(2)}</span>
+                            <span>${Number(giftAmount || 0).toFixed(2)}</span>
                         </div>
                         {appliedPromo && (
                             <div className="gift-summary-row gift-discount">
@@ -368,17 +486,17 @@ export default function GiftPage() {
                         )}
                         <div className="gift-summary-row gift-total">
                             <span>Total</span>
-                            <span>${finalAmount.toFixed(2)}</span>
+                            <span>${Number(finalAmount || 0).toFixed(2)}</span>
                         </div>
                     </div>
 
-                    {/* Checkout Button */}
+                    {/* Checkout */}
                     <button className="checkout-btn" onClick={handleCheckout}>
                         Checkout
                     </button>
                 </div>
 
-                {/* Right Column - Gallery */}
+                {/* Gallery */}
                 <div className="gift-card-gallery">
                     <div className="gallery-col">
                         <img src={gift1} alt="Gift card 1" />
